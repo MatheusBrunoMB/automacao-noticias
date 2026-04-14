@@ -17,3 +17,7 @@ Thumbs.db
 # Credenciais locais (nunca commitar)
 .env.local
 secrets.json
+
+# Claude Code
+.claude/
+CLAUDE.md
