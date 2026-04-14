@@ -137,9 +137,11 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
 
     NL = {"new_x": XPos.LMARGIN, "new_y": YPos.NEXT}
 
-    # Cabeçalho — fundo vermelho FOLKS #A9170A = RGB(169, 23, 10)
-    pdf.set_fill_color(169, 23, 10)
+    # Cabeçalho — fundo bege FOLKS #FFFCE9 = RGB(255, 252, 233) com borda inferior vermelha
+    pdf.set_fill_color(255, 252, 233)
     pdf.rect(0, 0, 210, 44, "F")
+    pdf.set_fill_color(169, 23, 10)
+    pdf.rect(0, 42, 210, 2, "F")  # borda inferior vermelha
 
     # Logo
     if os.path.exists(LOGO_PATH):
@@ -149,9 +151,10 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
         pdf.set_xy(0, 10)
 
     pdf.set_font("Helvetica", "B", 16)
-    pdf.set_text_color(255, 252, 233)  # #FFFCE9
+    pdf.set_text_color(169, 23, 10)  # #A9170A vermelho FOLKS
     pdf.cell(210, 8, "Agencia FOLKS - News Semanal", align="C", **NL)
     pdf.set_font("Helvetica", "", 11)
+    pdf.set_text_color(120, 12, 7)   # tom mais escuro para subtítulo
     pdf.cell(210, 6, f"Contabilidade - Tributario - Previdenciario | {semana_inicio} a {semana_fim}", align="C", **NL)
     pdf.cell(210, 6, f"Total: {total} noticias coletadas", align="C", **NL)
     pdf.ln(12)
@@ -224,10 +227,10 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
     """
     from datetime import datetime as _dt
 
-    # --- Paleta FOLKS ---
-    DARK_NAVY    = "A9170A"   # vermelho FOLKS
-    GOLD         = "FFFCE9"   # bege FOLKS (texto nos cabeçalhos)
-    LIGHT_GOLD   = "FAEEE6"   # bege rosado claro para KPIs
+    # --- Paleta FOLKS (invertida) ---
+    FOLKS_RED    = "A9170A"   # vermelho — texto e acentos sobre fundos claros
+    FOLKS_BEIGE  = "FFFCE9"   # bege — fundo de banners/cabeçalhos
+    LIGHT_BEIGE  = "FAEEE6"   # bege rosado — KPIs e destaques
     LIGHT_GRAY   = "F2F2F2"
     WHITE        = "FFFFFF"
 
@@ -280,16 +283,16 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
         ws.row_dimensions[2].height = 20
         ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=n_cols)
         c = ws.cell(row=1, column=1, value=title)
-        c.font = Font(name="Arial", bold=True, size=16, color=GOLD)
-        c.fill = _fill(DARK_NAVY)
+        c.font = Font(name="Arial", bold=True, size=16, color=FOLKS_RED)
+        c.fill = _fill(FOLKS_BEIGE)
         c.alignment = Alignment(horizontal="center", vertical="center")
         ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=n_cols)
         c2 = ws.cell(row=2, column=1, value=subtitle)
-        c2.font = Font(name="Arial", size=11, color=WHITE)
-        c2.fill = _fill(DARK_NAVY)
+        c2.font = Font(name="Arial", size=11, color=FOLKS_RED)
+        c2.fill = _fill(FOLKS_BEIGE)
         c2.alignment = Alignment(horizontal="center", vertical="center")
 
-    def _hdr(ws, row, col, value, bg=DARK_NAVY, fg=GOLD, size=9):
+    def _hdr(ws, row, col, value, bg=FOLKS_RED, fg=FOLKS_BEIGE, size=9):
         cell = ws.cell(row=row, column=col, value=value)
         cell.font = Font(name="Arial", bold=True, size=size, color=fg)
         cell.fill = _fill(bg)
@@ -326,30 +329,30 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
         ws_d.row_dimensions[4].height = 22
         ws_d.row_dimensions[5].height = 36
         cl = ws_d.cell(row=4, column=col, value=label)
-        cl.font = Font(name="Arial", bold=True, size=9, color="1A1A1A")
-        cl.fill = _fill(LIGHT_GOLD)
+        cl.font = Font(name="Arial", bold=True, size=9, color=FOLKS_RED)
+        cl.fill = _fill(LIGHT_BEIGE)
         cl.alignment = Alignment(horizontal="center", vertical="center")
         cv = ws_d.cell(row=5, column=col, value=valor)
-        cv.font = Font(name="Arial", bold=True, size=20, color=DARK_NAVY)
+        cv.font = Font(name="Arial", bold=True, size=20, color=FOLKS_RED)
         cv.fill = _fill(WHITE)
         cv.alignment = Alignment(horizontal="center", vertical="center")
 
     # Notícias por categoria (linha 7+)
     ws_d.cell(row=7, column=1, value="NOTÍCIAS POR CATEGORIA").font = Font(
-        name="Arial", bold=True, size=10, color=DARK_NAVY)
+        name="Arial", bold=True, size=10, color=FOLKS_RED)
     for i, cat in enumerate(ORDEM_CATEGORIAS):
         r = 8 + i
         ws_d.row_dimensions[r].height = 18
         cc = ws_d.cell(row=r, column=1, value=cat)
-        cc.font = Font(name="Arial", bold=True, size=10, color=DARK_NAVY)
-        cc.fill = _fill(LIGHT_GRAY)
+        cc.font = Font(name="Arial", bold=True, size=10, color=FOLKS_RED)
+        cc.fill = _fill(LIGHT_BEIGE)
         cq = ws_d.cell(row=r, column=2, value=por_cat.get(cat, 0))
-        cq.font = Font(name="Arial", size=10)
+        cq.font = Font(name="Arial", bold=True, size=10, color=FOLKS_RED)
         cq.fill = _fill(WHITE)
 
     # Pilares (coluna 4-5)
     ws_d.cell(row=7, column=4, value="PILARES").font = Font(
-        name="Arial", bold=True, size=10, color=DARK_NAVY)
+        name="Arial", bold=True, size=10, color=FOLKS_RED)
     for i, (pilar, cor, desc) in enumerate([
         ("Mercado 📊",    "EDE1F5", "Tributário & Legislação"),
         ("Educação 🎓",   "D9E8F5", "Contabilidade"),
@@ -419,8 +422,8 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
                 cell.fill = _fill(COR_PRIO.get(prio, WHITE))
                 cell.font = Font(name="Arial", bold=True, size=9)
             elif col_name == "Gancho":
-                cell.fill = _fill(LIGHT_GOLD)
-                cell.font = Font(name="Arial", bold=True, size=9, color=DARK_NAVY)
+                cell.fill = _fill(LIGHT_BEIGE)
+                cell.font = Font(name="Arial", bold=True, size=9, color=FOLKS_RED)
             else:
                 cell.fill = _fill(bg_row)
 

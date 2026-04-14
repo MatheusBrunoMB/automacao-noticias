@@ -5,26 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News Semanal</title>
 </head>
-<body style="margin:0;padding:0;background-color:#FFFCE9;font-family:Arial,Helvetica,sans-serif;">
+<body style="margin:0;padding:0;background-color:#A9170A;font-family:Arial,Helvetica,sans-serif;">
 
-<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#FFFCE9;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#A9170A;">
   <tr>
     <td align="center" style="padding:24px 12px;">
 
       <!-- Container principal -->
-      <table width="680" cellpadding="0" cellspacing="0" style="max-width:680px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(169,23,10,0.10);">
+      <table width="680" cellpadding="0" cellspacing="0" style="max-width:680px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.30);">
 
         <!-- HEADER -->
         <tr>
-          <td style="background:#A9170A;padding:28px 40px 24px 40px;text-align:center;">
+          <td style="background:#FFFCE9;padding:28px 40px 24px 40px;text-align:center;border-bottom:3px solid #A9170A;">
             {% if logo_b64 %}
             <img src="data:image/png;base64,{{ logo_b64 }}" alt="Agência FOLKS" height="52" style="display:block;margin:0 auto 16px auto;" />
             {% else %}
-            <p style="margin:0 0 12px 0;color:#FFFCE9;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;">Agência FOLKS</p>
+            <p style="margin:0 0 12px 0;color:#A9170A;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;">Agência FOLKS</p>
             {% endif %}
-            <h1 style="margin:0 0 6px 0;color:#FFFCE9;font-size:20px;font-weight:700;letter-spacing:0.5px;">News Semanal de Notícias</h1>
-            <p style="margin:0;color:rgba(255,252,233,0.85);font-size:13px;">Contabilidade · Tributário · Previdenciário</p>
-            <p style="margin:14px 0 0 0;color:#FFFCE9;font-size:12px;background:rgba(255,255,255,0.15);display:inline-block;padding:4px 16px;border-radius:20px;border:1px solid rgba(255,252,233,0.4);">
+            <h1 style="margin:0 0 6px 0;color:#A9170A;font-size:20px;font-weight:700;letter-spacing:0.5px;">News Semanal de Notícias</h1>
+            <p style="margin:0;color:rgba(169,23,10,0.70);font-size:13px;">Contabilidade · Tributário · Previdenciário</p>
+            <p style="margin:14px 0 0 0;color:#A9170A;font-size:12px;background:rgba(169,23,10,0.08);display:inline-block;padding:4px 16px;border-radius:20px;border:1px solid rgba(169,23,10,0.25);">
               {{ semana_inicio }} a {{ semana_fim }}
             </p>
           </td>
@@ -166,14 +166,14 @@
 
         <!-- FOOTER -->
         <tr>
-          <td style="padding:22px 40px 28px 40px;text-align:center;background:#FFFCE9;">
-            <p style="margin:0 0 6px 0;font-size:12px;color:#999;">
+          <td style="padding:22px 40px 28px 40px;text-align:center;background:#A9170A;">
+            <p style="margin:0 0 6px 0;font-size:12px;color:rgba(255,252,233,0.80);">
               Este email foi gerado automaticamente pelo sistema de automação de notícias da Agência FOLKS.
             </p>
-            <p style="margin:0 0 6px 0;font-size:12px;color:#999;">
-              Semana de <strong style="color:#A9170A;">{{ semana_inicio }}</strong> a <strong style="color:#A9170A;">{{ semana_fim }}</strong>
+            <p style="margin:0 0 6px 0;font-size:12px;color:rgba(255,252,233,0.80);">
+              Semana de <strong style="color:#FFFCE9;">{{ semana_inicio }}</strong> a <strong style="color:#FFFCE9;">{{ semana_fim }}</strong>
             </p>
-            <p style="margin:0;font-size:11px;color:#bbb;">
+            <p style="margin:0;font-size:11px;color:rgba(255,252,233,0.60);">
               📎 Este email contém dois anexos: <strong>news_semanal.pdf</strong> e <strong>pauta_semanal.xlsx</strong>
             </p>
           </td>
