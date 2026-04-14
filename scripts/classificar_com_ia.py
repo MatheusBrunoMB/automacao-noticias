@@ -23,34 +23,35 @@ BATCH_SIZE = 40
 
 _PROMPT_SISTEMA = """\
 Você é especialista em contabilidade, direito tributário e direito previdenciário brasileiro.
-Sua função é filtrar e classificar notícias para a newsletter semanal da Agência FOLKS,
+Sua função é classificar notícias para a newsletter semanal da Agência FOLKS,
 enviada a escritórios de contabilidade e advocacia tributária e previdenciária.
+
+IMPORTANTE: as notícias já passaram por um pré-filtro de palavras-chave, portanto a grande
+maioria será relevante. Marque relevante=false APENAS para exceções claras.
 
 Para cada notícia informe:
 
 1. relevante (bool)
-   TRUE  → tem aplicação prática direta para contadores, advogados tributaristas
-            ou advogados previdenciários. Aceite:
-            - Tributário: leis, decretos, INs, prazos fiscais, decisões STF/STJ/CARF,
-              eSocial (impacto fiscal), SPED, obrigações acessórias, alíquotas, regimes
-              tributários (Simples, Lucro Presumido, Lucro Real), IRPF, IRPJ, ICMS,
-              ISS, PIS/COFINS, reforma tributária, planejamento fiscal.
-            - Previdenciário: INSS, aposentadoria, pensão por morte, auxílio-doença,
-              auxílio-acidente, salário-maternidade, BPC/LOAS, contribuição previdenciária,
-              RGPS, RPPS, eSocial (impacto previdenciário), revisões de benefícios,
-              decisões STF/STJ com repercussão previdenciária, perícia médica INSS,
-              planejamento previdenciário, tempo de contribuição, fator previdenciário.
-   FALSE → descartar: notícia policial/criminal sem cunho fiscal ou previdenciário,
-            apreensão de mercadorias, contrabando, política sem impacto direto,
-            esportes, cultura, economia geral sem reflexo tributário/previdenciário.
+   Marque FALSE SOMENTE se a notícia for claramente sobre: crime/operação policial sem
+   cunho fiscal, contrabando/apreensão de produtos ilícitos, esportes, entretenimento,
+   cultura, política partidária sem impacto tributário ou previdenciário direto.
+   Em caso de dúvida, marque TRUE — é melhor incluir do que descartar.
+
+   São SEMPRE relevantes (mesmo que pareçam genéricas):
+   - Qualquer notícia da Receita Federal, CFC, CARF, PGFN, Ministério da Fazenda
+   - Qualquer notícia sobre INSS, aposentadoria, benefícios previdenciários
+   - Decisões do STF ou STJ que mencionem tributos, contribuições ou benefícios
+   - Projetos de lei sobre impostos, contribuições, regimes tributários ou previdência
+   - Prazos, obrigações acessórias, eSocial, SPED, nota fiscal
+   - Contabilidade, auditoria, normas do CFC, CRC
 
 2. prioridade (só se relevante=true)
    "Alto"  → nova lei/decreto/IN já publicada, prazo urgente, decisão STF/STJ de
-              efeito imediato, mudança obrigatória com impacto nos clientes agora,
+              efeito imediato, mudança obrigatória já em vigor para os clientes,
               alteração de benefício ou alíquota previdenciária já em vigor.
    "Médio" → projeto de lei em andamento, orientação/esclarecimento da Receita ou
               INSS, atualização de alíquota ou tabela, regulamentação, nova tese
-              previdenciária em discussão nos tribunais.
+              em discussão nos tribunais.
    "Baixo" → retrospectiva, tendência, curiosidade fiscal ou previdenciária,
               conteúdo informativo sem urgência imediata.
 
