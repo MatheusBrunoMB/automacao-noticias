@@ -16,7 +16,7 @@ from email.mime.text import MIMEText
 from io import BytesIO  # usado pelo openpyxl
 
 import pytz
-from fpdf import FPDF
+from fpdf import FPDF, XPos, YPos
 from jinja2 import Environment, FileSystemLoader
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -101,9 +101,26 @@ def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -
     )
 
 
+def _pdf_txt(texto: str) -> str:
+    """Substitui caracteres fora do latin-1 por equivalentes ASCII para o PDF."""
+    substituicoes = {
+        "\u2014": "-",   # em dash —
+        "\u2013": "-",   # en dash –
+        "\u2019": "'",   # aspas tipograficas '
+        "\u2018": "'",
+        "\u201c": '"',   # aspas duplas tipograficas "
+        "\u201d": '"',
+        "\u2026": "...", # reticencias …
+        "\u00e9": "e",   # fallback para outros fora do latin-1
+    }
+    for orig, sub in substituicoes.items():
+        texto = texto.replace(orig, sub)
+    # Remove qualquer char ainda fora do latin-1
+    return texto.encode("latin-1", errors="replace").decode("latin-1")
+
+
 def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -> bytes:
     """Gera PDF do digest usando fpdf2 (puro Python, sem dependências de sistema)."""
-    ordem_prio = {"Alto": 0, "Médio": 1, "Baixo": 2}
     icone_prio = {"Alto": "[ALTO]", "Médio": "[MEDIO]", "Baixo": "[BAIXO]"}
     cor_prio = {
         "Alto":  (229, 57, 53),
@@ -116,16 +133,18 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
     pdf.set_margins(15, 15, 15)
     pdf.add_page()
 
+    NL = {"new_x": XPos.LMARGIN, "new_y": YPos.NEXT}
+
     # Cabeçalho
     pdf.set_fill_color(0, 48, 135)
     pdf.rect(0, 0, 210, 38, "F")
     pdf.set_font("Helvetica", "B", 16)
     pdf.set_text_color(255, 255, 255)
     pdf.set_xy(0, 10)
-    pdf.cell(210, 8, "Digest Semanal de Noticias", align="C", ln=True)
+    pdf.cell(210, 8, "Digest Semanal de Noticias", align="C", **NL)
     pdf.set_font("Helvetica", "", 11)
-    pdf.cell(210, 6, f"Contabilidade & Direito Tributario — {semana_inicio} a {semana_fim}", align="C", ln=True)
-    pdf.cell(210, 6, f"Total: {total} noticias coletadas", align="C", ln=True)
+    pdf.cell(210, 6, f"Contabilidade & Direito Tributario - {semana_inicio} a {semana_fim}", align="C", **NL)
+    pdf.cell(210, 6, f"Total: {total} noticias coletadas", align="C", **NL)
     pdf.ln(12)
 
     pdf.set_text_color(0, 0, 0)
@@ -138,7 +157,7 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
         # Título da categoria
         pdf.set_font("Helvetica", "B", 13)
         pdf.set_fill_color(240, 240, 245)
-        pdf.cell(0, 9, f"  {cat}  ({len(itens)} noticias)", ln=True, fill=True)
+        pdf.cell(0, 9, _pdf_txt(f"  {cat}  ({len(itens)} noticias)"), fill=True, **NL)
         pdf.ln(3)
 
         for n in itens:
@@ -148,39 +167,38 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
             # Badge de prioridade
             pdf.set_font("Helvetica", "B", 8)
             pdf.set_text_color(r, g, b)
-            pdf.cell(0, 5, icone_prio.get(prio, ""), ln=True)
+            pdf.cell(0, 5, icone_prio.get(prio, ""), **NL)
 
             # Título
             pdf.set_font("Helvetica", "B", 10)
             pdf.set_text_color(26, 26, 46)
-            titulo = n.get("titulo", "")
-            pdf.multi_cell(0, 5, titulo)
+            pdf.multi_cell(0, 5, _pdf_txt(n.get("titulo", "")))
 
             # Fonte e data
             pdf.set_font("Helvetica", "", 8)
             pdf.set_text_color(120, 120, 120)
-            pdf.cell(0, 5, f"{n.get('fonte', '')}  |  {n.get('data_publicacao', '')[:10]}", ln=True)
+            pdf.cell(0, 5, _pdf_txt(f"{n.get('fonte', '')}  |  {n.get('data_publicacao', '')[:10]}"), **NL)
 
             # Resumo
             resumo = n.get("resumo", "")[:280]
             if resumo:
                 pdf.set_font("Helvetica", "", 9)
                 pdf.set_text_color(70, 70, 70)
-                pdf.multi_cell(0, 5, resumo)
+                pdf.multi_cell(0, 5, _pdf_txt(resumo))
 
             # Sugestão de pauta
             pauta = n.get("sugestao_pauta", "")
             if pauta:
                 pdf.set_font("Helvetica", "I", 9)
                 pdf.set_text_color(80, 80, 140)
-                pdf.multi_cell(0, 5, f"Pauta: {pauta}")
+                pdf.multi_cell(0, 5, _pdf_txt(f"Pauta: {pauta}"))
 
             # URL
-            pdf.set_font("Helvetica", "U", 8)
-            pdf.set_text_color(0, 80, 200)
             url = n.get("url", "")
             if url:
-                pdf.cell(0, 5, url[:90], ln=True, link=url)
+                pdf.set_font("Helvetica", "U", 8)
+                pdf.set_text_color(0, 80, 200)
+                pdf.cell(0, 5, url[:90], link=url, **NL)
 
             pdf.set_draw_color(220, 220, 220)
             pdf.line(15, pdf.get_y() + 2, 195, pdf.get_y() + 2)
