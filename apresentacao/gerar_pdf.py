@@ -502,19 +502,28 @@ def aplicacoes(pdf: PDF):
     ]:
         pdf.card(titulo, desc)
 
-    pdf.ln(4)
-    pdf.hline(RED)
-    pdf.set_font(FONT, "", 9); pdf.ink(LIGHT)
-    pdf.cell(0, 5,
+    pdf.ln(6)
+    # ── Rodapé vermelho ──────────────────────────────────────
+    y_footer = pdf.get_y()
+    footer_h = 34
+    pdf.fill(RED)
+    pdf.rect(0, y_footer, 210, footer_h, "F")
+    # Tagline
+    pdf.set_xy(0, y_footer + 5)
+    pdf.set_font(FONT, "", 8.5)
+    pdf.ink(BEIGE)
+    pdf.cell(210, 5,
         "Automatizando o que pode ser automatizado para você focar no que realmente importa.",
         align="C", **NL)
-    pdf.ln(4)
+    # Logo horizontal centralizado
     if os.path.exists(LOGO_HORIZONTAL):
-        logo_w = 60
-        pdf.image(LOGO_HORIZONTAL, x=(210 - logo_w) / 2, y=pdf.get_y(), w=logo_w)
+        logo_w = 75
+        pdf.image(LOGO_HORIZONTAL, x=(210 - logo_w) / 2, y=y_footer + 13, w=logo_w)
     else:
-        pdf.set_font(FONT, "B", 9); pdf.ink(RED)
-        pdf.cell(0, 5, "Agência FOLKS", align="C", **NL)
+        pdf.set_xy(0, y_footer + 16)
+        pdf.set_font(FONT, "B", 11)
+        pdf.ink(BEIGE)
+        pdf.cell(210, 6, "Agência FOLKS", align="C", **NL)
 
 
 def main():
