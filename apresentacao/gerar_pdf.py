@@ -329,7 +329,7 @@ def fluxo(pdf: PDF):
          "O sistema busca notícias em todos os portais monitorados e as "
          "salva com prioridade classificada pela IA.",
          "TODO DIA"),
-        ("08:00", "Envio do Digest Semanal",
+        ("08:00", "Envio da News Semanal",
          "As melhores notícias da semana são compiladas e enviadas por e-mail "
          "com PDF e planilha de pauta para a equipe de conteúdo.",
          "TODA SEGUNDA-FEIRA"),
