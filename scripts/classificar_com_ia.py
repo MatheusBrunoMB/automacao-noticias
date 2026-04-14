@@ -39,13 +39,31 @@ Para cada notícia informe:
 
    São SEMPRE relevantes (mesmo que pareçam genéricas):
    - Qualquer notícia da Receita Federal, CFC, CARF, PGFN, Ministério da Fazenda
+   - Qualquer notícia da SEFAZ-CE ou Prefeitura de Fortaleza com impacto fiscal/tributário
    - Qualquer notícia sobre INSS, aposentadoria, benefícios previdenciários
    - Decisões do STF ou STJ que mencionem tributos, contribuições ou benefícios
    - Projetos de lei sobre impostos, contribuições, regimes tributários ou previdência
    - Prazos, obrigações acessórias, eSocial, SPED, nota fiscal
    - Contabilidade, auditoria, normas do CFC, CRC
 
-2. prioridade (só se relevante=true)
+2. categoria (só se relevante=true) — escolha UMA das quatro:
+   "Tributário"    → tributos, impostos e obrigações: IRPF, IRPJ, ICMS, ISS, IPI,
+                     PIS/COFINS, CSLL, Simples Nacional, eSocial fiscal, SPED,
+                     prazos fiscais, autuações, parcelamentos, dívida ativa,
+                     alíquotas, regimes tributários, reforma tributária.
+                     Inclui notícias da Receita Federal sobre obrigações e fiscalização.
+   "Legislação"    → publicação de novas leis, decretos, instruções normativas,
+                     portarias, resoluções — em âmbito federal, estadual (SEFAZ-CE)
+                     ou municipal (Prefeitura de Fortaleza). Inclui projetos de lei
+                     em votação e legislação previdenciária nova.
+   "Contabilidade" → normas contábeis, CFC, CRC, auditoria, escrituração,
+                     planejamento contábil, notícias do meio contábil.
+   "Jurídico"      → direito tributário, previdenciário, empresarial e societário:
+                     decisões STF/STJ/CARF, teses jurídicas, jurisprudência,
+                     INSS e benefícios previdenciários, planejamento previdenciário,
+                     aposentadoria, direito empresarial e societário.
+
+3. prioridade (só se relevante=true)
    "Alto"  → nova lei/decreto/IN já publicada, prazo urgente, decisão STF/STJ de
               efeito imediato, mudança obrigatória já em vigor para os clientes,
               alteração de benefício ou alíquota previdenciária já em vigor.
@@ -55,7 +73,7 @@ Para cada notícia informe:
    "Baixo" → retrospectiva, tendência, curiosidade fiscal ou previdenciária,
               conteúdo informativo sem urgência imediata.
 
-3. sugestao_pauta (só se relevante=true, máx 140 caracteres, inclua emoji)
+4. sugestao_pauta (só se relevante=true, máx 140 caracteres, inclua emoji)
    Ideia criativa e objetiva para a equipe criar um card ou vídeo curto.
    Exemplos: "🚨 Alerta: [tema] — o que muda para seus clientes?"
              "📊 5 pontos sobre [tema] que todo contador precisa saber"
@@ -93,7 +111,7 @@ def _chamar_claude(artigos_indexados: list) -> list:
         f"Classifique as {len(entrada)} notícias abaixo.\n"
         "Formato da resposta:\n"
         '{"resultados": ['
-        '{"idx": 0, "relevante": true, "prioridade": "Alto", "sugestao_pauta": "..."},'
+        '{"idx": 0, "relevante": true, "categoria": "Tributário", "prioridade": "Alto", "sugestao_pauta": "..."},'
         '{"idx": 1, "relevante": false},'
         "...]}\n\n"
         f"Notícias:\n{json.dumps(entrada, ensure_ascii=False, indent=2)}"
@@ -161,6 +179,8 @@ def classificar_noticias(noticias: list) -> list:
         if not r.get("relevante", True):
             rejeitadas += 1
             continue
+        if r.get("categoria"):
+            n["categoria"] = r["categoria"]
         n["prioridade"] = r.get("prioridade", n.get("prioridade", "Baixo"))
         if r.get("sugestao_pauta"):
             n["sugestao_pauta"] = r["sugestao_pauta"]

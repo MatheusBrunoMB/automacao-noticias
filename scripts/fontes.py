@@ -1,26 +1,63 @@
 # Registro de fontes de notícias e listas de palavras-chave
 
 FONTES = [
+    # --- Tributário ---
     {
         "nome": "Receita Federal",
         "url": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/ultimas-noticias/RSS",
-        "categoria": "Receita Federal",
+        "categoria": "Tributário",   # categoria padrão; IA pode reclassificar como Legislação
         "ativo": True,
         "tipo": "rss",
         "max_itens": 15,
     },
     {
-        "nome": "Portal Contábeis",
-        "url": "https://www.contabeis.com.br/noticias/rss/",
-        "categoria": "Contabilidade",
+        "nome": "Notícias Fiscais",
+        "url": "https://noticiasfiscais.com.br/feed/",
+        "categoria": "Tributário",
         "ativo": True,
         "tipo": "rss",
         "max_itens": 20,
     },
     {
-        "nome": "Notícias Fiscais",
-        "url": "https://noticiasfiscais.com.br/feed/",
+        "nome": "NewsAPI - Tributário BR",
+        "url": None,
         "categoria": "Tributário",
+        "ativo": True,
+        "tipo": "newsapi",
+        "query": "tributário OR contabilidade OR receita federal OR reforma tributária OR IRPF OR ICMS",
+        "language": "pt",
+        "max_itens": 10,
+    },
+    # --- Legislação ---
+    {
+        "nome": "Senado Federal",
+        "url": "https://www12.senado.leg.br/noticias/feed",
+        "categoria": "Legislação",
+        "ativo": True,
+        "tipo": "rss",
+        "max_itens": 10,
+    },
+    {
+        "nome": "SEFAZ-CE",
+        "url": "https://www.sefaz.ce.gov.br/feed/",
+        "categoria": "Legislação",
+        "ativo": True,
+        "tipo": "rss",
+        "max_itens": 10,
+    },
+    {
+        "nome": "Prefeitura de Fortaleza",
+        "url": "https://www.fortaleza.ce.gov.br/?format=feed&type=rss",
+        "categoria": "Legislação",
+        "ativo": True,
+        "tipo": "rss",
+        "max_itens": 10,
+    },
+    # --- Contabilidade ---
+    {
+        "nome": "Portal Contábeis",
+        "url": "https://www.contabeis.com.br/noticias/rss/",
+        "categoria": "Contabilidade",
         "ativo": True,
         "tipo": "rss",
         "max_itens": 20,
@@ -33,6 +70,7 @@ FONTES = [
         "tipo": "rss",
         "max_itens": 10,
     },
+    # --- Jurídico ---
     {
         "nome": "JOTA Jornalismo",
         "url": "https://www.jota.info/feed",
@@ -40,24 +78,6 @@ FONTES = [
         "ativo": True,
         "tipo": "rss",
         "max_itens": 15,
-    },
-    {
-        "nome": "Senado Federal",
-        "url": "https://www12.senado.leg.br/noticias/feed",
-        "categoria": "Legislação",
-        "ativo": True,
-        "tipo": "rss",
-        "max_itens": 10,
-    },
-    {
-        "nome": "NewsAPI - Tributário BR",
-        "url": None,
-        "categoria": "Tributário",
-        "ativo": True,
-        "tipo": "newsapi",
-        "query": "tributário OR contabilidade OR receita federal OR reforma tributária OR IRPF OR ICMS",
-        "language": "pt",
-        "max_itens": 10,
     },
 ]
 
@@ -174,16 +194,14 @@ PALAVRAS_CHAVE_EXCLUSAO = [
 
 # Mapeamento de cores por categoria para uso no email e PDF
 CORES_CATEGORIA = {
-    "Receita Federal": "#003087",
-    "Contabilidade":   "#2E7D32",
-    "Tributário":      "#E65100",
-    "Jurídico":        "#4A148C",
-    "Legislação":      "#00695C",
+    "Tributário":   "#003087",  # azul
+    "Legislação":   "#00695C",  # verde escuro
+    "Contabilidade":"#2E7D32",  # verde
+    "Jurídico":     "#4A148C",  # roxo
 }
 
-# Ordem de exibição das categorias no digest
+# Ordem de exibição das categorias na news semanal
 ORDEM_CATEGORIAS = [
-    "Receita Federal",
     "Tributário",
     "Legislação",
     "Contabilidade",

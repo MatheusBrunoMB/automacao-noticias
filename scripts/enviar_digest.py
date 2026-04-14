@@ -40,7 +40,7 @@ _EXCEL_CORES = {
     "Baixo": "F5F5F5",  # cinza claro
 }
 
-MAX_POR_CATEGORIA = 10
+MAX_POR_CATEGORIA = 15
 
 
 def _carregar_noticias_semana() -> list:

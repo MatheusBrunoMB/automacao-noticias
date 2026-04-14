@@ -13,6 +13,8 @@ FONTES_ESPECIALIZADAS = {
     "Portal Contábeis",
     "Notícias Fiscais",
     "CFC - Conselho Federal de Contabilidade",
+    "SEFAZ-CE",
+    "Prefeitura de Fortaleza",
 }
 
 
