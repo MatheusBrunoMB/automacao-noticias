@@ -33,12 +33,6 @@ GMAIL_REMETENTE = os.environ.get("GMAIL_REMETENTE", "")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
 DESTINATARIOS_STR = os.environ.get("DESTINATARIOS", "")
 
-# Cores de fill para Excel por prioridade
-_EXCEL_CORES = {
-    "Alto":  "FFCCCC",  # vermelho claro
-    "Médio": "FFF9C4",  # amarelo claro
-    "Baixo": "F5F5F5",  # cinza claro
-}
 
 MAX_POR_CATEGORIA = 15
 
@@ -208,67 +202,237 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
     return bytes(pdf.output())
 
 
-def _gerar_xlsx(noticias: list) -> bytes:
-    """Gera planilha Excel com duas abas: todas as notícias e pauta da semana."""
-    wb = Workbook()
+def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
+    """
+    Gera plano editorial em Excel seguindo o padrão da skill /plano-editorial.
+    Abas: Dashboard | Pauta da Semana | Referências
+    """
+    from datetime import datetime as _dt
 
-    cabecalhos = [
-        "Prioridade", "Categoria", "Título", "Resumo",
-        "Fonte", "Data", "URL", "Sugestão de Pauta",
-    ]
+    # --- Paleta ---
+    DARK_NAVY    = "1B2A4A"
+    GOLD         = "C9A84C"
+    LIGHT_GOLD   = "F5E9C8"
+    LIGHT_GRAY   = "F2F2F2"
+    WHITE        = "FFFFFF"
+
+    COR_PILAR = {
+        "Mercado":     "EDE1F5",
+        "Educação":    "D9E8F5",
+        "Autoridade":  "F5E9C8",
+        "Dica Rápida": "FDE9CE",
+    }
+    COR_FORMATO = {"Feed": "D6E4F0", "Reels": "FDEDEC", "Stories": "E8F8F5"}
+    COR_PRIO    = {"Alto": "FFCCCC", "Médio": "FFF9C4", "Baixo": "F5F5F5"}
+
+    def _pilar(cat):
+        return {"Tributário": "Mercado", "Legislação": "Mercado",
+                "Contabilidade": "Educação", "Jurídico": "Autoridade"}.get(cat, "Mercado")
+
+    def _formato(prio):
+        return {"Alto": "Reels", "Médio": "Feed", "Baixo": "Stories"}.get(prio, "Feed")
+
+    def _cta(prio):
+        return {
+            "Alto":  "Fale com um especialista sobre o impacto para o seu negócio",
+            "Médio": "Salve esse post — você vai precisar dessa informação",
+            "Baixo": "Compartilhe com quem precisa saber disso",
+        }.get(prio, "Acompanhe nosso perfil para mais atualizações")
+
+    def _hashtags(cat):
+        return {
+            "Tributário":    "#tributário #impostos #planejamentofiscal",
+            "Legislação":    "#legislação #novasleis #direitotributário",
+            "Contabilidade": "#contabilidade #contador #gestãocontábil",
+            "Jurídico":      "#direitotributário #direitoprevidenciário #advocacia",
+        }.get(cat, "#contabilidade #tributário")
+
+    def _visual(cat, prio):
+        if prio == "Alto":
+            return "Fundo vermelho/laranja, ícone de alerta, texto em branco"
+        return {
+            "Tributário":    "Ícone de imposto/moeda, fundo azul escuro, texto objetivo",
+            "Legislação":    "Ícone de documento/lei, fundo verde, destaque para o nome da lei",
+            "Contabilidade": "Ícone de gráfico/calculadora, fundo azul claro, tom técnico",
+            "Jurídico":      "Ícone de balança/justiça, fundo roxo, tom institucional",
+        }.get(cat, "Arte clean com cores da marca")
+
+    def _fill(color):
+        return PatternFill("solid", fgColor=color)
+
+    def _banner(ws, title, subtitle, n_cols):
+        ws.row_dimensions[1].height = 30
+        ws.row_dimensions[2].height = 20
+        ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=n_cols)
+        c = ws.cell(row=1, column=1, value=title)
+        c.font = Font(name="Arial", bold=True, size=16, color=GOLD)
+        c.fill = _fill(DARK_NAVY)
+        c.alignment = Alignment(horizontal="center", vertical="center")
+        ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=n_cols)
+        c2 = ws.cell(row=2, column=1, value=subtitle)
+        c2.font = Font(name="Arial", size=11, color=WHITE)
+        c2.fill = _fill(DARK_NAVY)
+        c2.alignment = Alignment(horizontal="center", vertical="center")
+
+    def _hdr(ws, row, col, value, bg=DARK_NAVY, fg=GOLD, size=9):
+        cell = ws.cell(row=row, column=col, value=value)
+        cell.font = Font(name="Arial", bold=True, size=size, color=fg)
+        cell.fill = _fill(bg)
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        return cell
 
     ordem_prio = {"Alto": 0, "Médio": 1, "Baixo": 2}
     noticias_ordenadas = sorted(
         noticias,
-        key=lambda x: (
-            ordem_prio.get(x.get("prioridade", "Baixo"), 2),
-            x.get("data_publicacao", ""),
-        ),
+        key=lambda x: (ordem_prio.get(x.get("prioridade", "Baixo"), 2),
+                       x.get("data_publicacao", "")),
     )
 
-    def _preencher_aba(ws, dados):
-        # Cabeçalho
-        ws.append(cabecalhos)
-        for col_idx, _ in enumerate(cabecalhos, 1):
-            cell = ws.cell(row=1, column=col_idx)
-            cell.font = Font(bold=True, color="FFFFFF")
-            cell.fill = PatternFill("solid", fgColor="1a1a2e")
-            cell.alignment = Alignment(horizontal="center", wrap_text=True)
+    wb = Workbook()
 
-        # Dados
-        for n in dados:
-            row = [
-                n.get("prioridade", ""),
-                n.get("categoria", ""),
-                n.get("titulo", ""),
-                n.get("resumo", ""),
-                n.get("fonte", ""),
-                n.get("data_publicacao", "")[:10],
-                n.get("url", ""),
-                n.get("sugestao_pauta", ""),
-            ]
-            ws.append(row)
-            prio = n.get("prioridade", "Baixo")
-            fill_color = _EXCEL_CORES.get(prio, "FFFFFF")
-            for col_idx in range(1, len(cabecalhos) + 1):
-                cell = ws.cell(row=ws.max_row, column=col_idx)
-                cell.fill = PatternFill("solid", fgColor=fill_color)
-                cell.alignment = Alignment(wrap_text=True, vertical="top")
+    # ── Dashboard ────────────────────────────────────────────────────────────
+    ws_d = wb.active
+    ws_d.title = "Dashboard"
 
-        # Ajusta largura das colunas
-        larguras = [12, 14, 45, 55, 20, 12, 50, 60]
-        for i, largura in enumerate(larguras, 1):
-            ws.column_dimensions[get_column_letter(i)].width = largura
+    total    = len(noticias_ordenadas)
+    por_cat  = {c: 0 for c in ORDEM_CATEGORIAS}
+    por_prio = {"Alto": 0, "Médio": 0, "Baixo": 0}
+    for n in noticias_ordenadas:
+        por_cat[n.get("categoria", "Tributário")] = por_cat.get(n.get("categoria", "Tributário"), 0) + 1
+        por_prio[n.get("prioridade", "Baixo")] = por_prio.get(n.get("prioridade", "Baixo"), 0) + 1
 
-    # Aba 1: Todas as notícias
-    ws1 = wb.active
-    ws1.title = "Todas as Notícias"
-    _preencher_aba(ws1, noticias_ordenadas)
+    _banner(ws_d, "Agência FOLKS — Plano Editorial de Notícias",
+            f"Semana de {semana_inicio} a {semana_fim}  ·  {total} notícias mapeadas", 6)
 
-    # Aba 2: Pauta da Semana (só Alto e Médio)
-    ws2 = wb.create_sheet("Pauta da Semana")
-    pauta = [n for n in noticias_ordenadas if n.get("prioridade") in ("Alto", "Médio")]
-    _preencher_aba(ws2, pauta)
+    # KPIs linha 4-5
+    kpis = [("Total", total), ("🔴 Alta", por_prio["Alto"]),
+            ("🟡 Média", por_prio["Médio"]), ("⚪ Baixa", por_prio["Baixo"])]
+    for col, (label, valor) in enumerate(kpis, 1):
+        ws_d.row_dimensions[4].height = 22
+        ws_d.row_dimensions[5].height = 36
+        cl = ws_d.cell(row=4, column=col, value=label)
+        cl.font = Font(name="Arial", bold=True, size=9, color=DARK_NAVY)
+        cl.fill = _fill(LIGHT_GOLD)
+        cl.alignment = Alignment(horizontal="center", vertical="center")
+        cv = ws_d.cell(row=5, column=col, value=valor)
+        cv.font = Font(name="Arial", bold=True, size=20, color=DARK_NAVY)
+        cv.fill = _fill(WHITE)
+        cv.alignment = Alignment(horizontal="center", vertical="center")
+
+    # Notícias por categoria (linha 7+)
+    ws_d.cell(row=7, column=1, value="NOTÍCIAS POR CATEGORIA").font = Font(
+        name="Arial", bold=True, size=10, color=DARK_NAVY)
+    for i, cat in enumerate(ORDEM_CATEGORIAS):
+        r = 8 + i
+        ws_d.row_dimensions[r].height = 18
+        cc = ws_d.cell(row=r, column=1, value=cat)
+        cc.font = Font(name="Arial", bold=True, size=10)
+        cc.fill = _fill(LIGHT_GRAY)
+        cq = ws_d.cell(row=r, column=2, value=por_cat.get(cat, 0))
+        cq.font = Font(name="Arial", size=10)
+        cq.fill = _fill(WHITE)
+
+    # Pilares (coluna 4-5)
+    ws_d.cell(row=7, column=4, value="PILARES").font = Font(
+        name="Arial", bold=True, size=10, color=DARK_NAVY)
+    for i, (pilar, cor, desc) in enumerate([
+        ("Mercado 📊",    "EDE1F5", "Tributário & Legislação"),
+        ("Educação 🎓",   "D9E8F5", "Contabilidade"),
+        ("Autoridade 💼", "F5E9C8", "Jurídico"),
+    ]):
+        r = 8 + i
+        cp = ws_d.cell(row=r, column=4, value=pilar)
+        cp.font = Font(name="Arial", bold=True, size=10)
+        cp.fill = _fill(cor)
+        cd = ws_d.cell(row=r, column=5, value=desc)
+        cd.font = Font(name="Arial", size=9)
+        cd.fill = _fill(WHITE)
+
+    for col, w in [(1, 22), (2, 10), (3, 4), (4, 22), (5, 22), (6, 10)]:
+        ws_d.column_dimensions[get_column_letter(col)].width = w
+
+    # ── Pauta da Semana ──────────────────────────────────────────────────────
+    ws_p = wb.create_sheet("Pauta da Semana")
+
+    COLS   = ["Semana","Data","Dia","Formato","Pilar","Tema","Gancho",
+              "Desenvolvimento","CTA","Hashtags","Sugestão Visual","Status","Fonte","URL"]
+    WIDTHS = [14, 12, 11, 11, 16, 35, 45, 50, 35, 28, 32, 13, 20, 40]
+
+    _banner(ws_p, "Agência FOLKS — Pauta da Semana",
+            f"{semana_inicio} a {semana_fim}", len(COLS))
+
+    ws_p.row_dimensions[3].height = 32
+    for ci, name in enumerate(COLS, 1):
+        _hdr(ws_p, 3, ci, name)
+    ws_p.freeze_panes = "A4"
+    ws_p.auto_filter.ref = f"A3:{get_column_letter(len(COLS))}3"
+
+    for ri, n in enumerate(noticias_ordenadas, 4):
+        ws_p.row_dimensions[ri].height = 52
+        cat   = n.get("categoria", "Tributário")
+        prio  = n.get("prioridade", "Baixo")
+        pilar = _pilar(cat)
+        fmt   = _formato(prio)
+
+        try:
+            d = _dt.fromisoformat(n.get("data_publicacao", "")[:10])
+            data_s   = d.strftime("%d/%m/%Y")
+            dia_s    = ["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"][d.weekday()]
+            semana_s = f"Sem.{d.isocalendar()[1]} ({d.strftime('%d/%m')})"
+        except Exception:
+            data_s = n.get("data_publicacao", "")[:10]
+            dia_s = ""
+            semana_s = f"Semana de {semana_inicio}"
+
+        valores = [semana_s, data_s, dia_s, fmt, pilar,
+                   n.get("titulo", ""), n.get("sugestao_pauta", ""),
+                   n.get("resumo", "")[:400], _cta(prio), _hashtags(cat),
+                   _visual(cat, prio), prio, n.get("fonte", ""), n.get("url", "")]
+
+        bg_row = LIGHT_GRAY if ri % 2 == 0 else WHITE
+        for ci, valor in enumerate(valores, 1):
+            cell = ws_p.cell(row=ri, column=ci, value=valor)
+            cell.font = Font(name="Arial", size=9)
+            cell.alignment = Alignment(wrap_text=True, vertical="top")
+            col_name = COLS[ci - 1]
+            if col_name == "Pilar":
+                cell.fill = _fill(COR_PILAR.get(pilar, WHITE))
+                cell.font = Font(name="Arial", bold=True, size=9)
+            elif col_name == "Formato":
+                cell.fill = _fill(COR_FORMATO.get(fmt, WHITE))
+            elif col_name == "Status":
+                cell.fill = _fill(COR_PRIO.get(prio, WHITE))
+                cell.font = Font(name="Arial", bold=True, size=9)
+            elif col_name == "Gancho":
+                cell.fill = _fill(LIGHT_GOLD)
+                cell.font = Font(name="Arial", bold=True, size=9, color=DARK_NAVY)
+            else:
+                cell.fill = _fill(bg_row)
+
+    for ci, w in enumerate(WIDTHS, 1):
+        ws_p.column_dimensions[get_column_letter(ci)].width = w
+
+    # ── Referências ──────────────────────────────────────────────────────────
+    ws_r = wb.create_sheet("Referências")
+    _banner(ws_r, "Agência FOLKS — Referências", "Hashtags por categoria", 3)
+
+    _hdr(ws_r, 4, 1, "CATEGORIA")
+    _hdr(ws_r, 4, 2, "HASHTAGS SUGERIDAS")
+    for i, (cat, tags) in enumerate([
+        ("Tributário",    "#tributário #impostos #planejamentofiscal #reformatributária #direitofiscal"),
+        ("Legislação",    "#legislação #novasleis #direitotributário #sefaz #prefeituradfortaleza"),
+        ("Contabilidade", "#contabilidade #contador #gestãocontábil #escritóriocontábil #cfc"),
+        ("Jurídico",      "#direitotributário #direitoprevidenciário #advocaciatributária #INSS"),
+    ], 5):
+        ws_r.row_dimensions[i].height = 18
+        cc = ws_r.cell(row=i, column=1, value=cat)
+        cc.font = Font(name="Arial", bold=True, size=10)
+        cc.fill = _fill(LIGHT_GRAY)
+        ct = ws_r.cell(row=i, column=2, value=tags)
+        ct.font = Font(name="Arial", size=9)
+        ct.fill = _fill(WHITE)
+    for col, w in [(1, 20), (2, 70), (3, 10)]:
+        ws_r.column_dimensions[get_column_letter(col)].width = w
 
     buffer = BytesIO()
     wb.save(buffer)
@@ -351,7 +515,7 @@ def main():
     pdf_bytes = _gerar_pdf(grupos, semana_inicio, semana_fim, total)
 
     log_info("Gerando planilha XLSX...")
-    xlsx_bytes = _gerar_xlsx(noticias)
+    xlsx_bytes = _gerar_xlsx(noticias, semana_inicio, semana_fim)
 
     # Salva arquivos localmente (commitados no repo como arquivo)
     os.makedirs(DIGESTS_DIR, exist_ok=True)
