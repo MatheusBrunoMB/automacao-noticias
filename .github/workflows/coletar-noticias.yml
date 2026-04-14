@@ -36,6 +36,7 @@ jobs:
       - name: Coletar notícias
         env:
           NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scripts/coletar_noticias.py
 
       - name: Commit e push das notícias

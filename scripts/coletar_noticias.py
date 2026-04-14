@@ -15,6 +15,7 @@ import requests
 sys.path.insert(0, os.path.dirname(__file__))
 
 from analisar_noticias import calcular_prioridade, gerar_sugestao_pauta
+from classificar_com_ia import classificar_noticias
 from filtrar_noticias import filtrar_lista
 from fontes import FONTES
 from utils import (
@@ -183,6 +184,18 @@ def main():
         reverse=False,
     )
     # Inverte a data dentro de cada prioridade (mais recente primeiro)
+    todas_noticias.sort(
+        key=lambda n: (
+            ordem_prioridade.get(n.get("prioridade", "Baixo"), 2),
+            n.get("data_publicacao", ""),
+        )
+    )
+
+    # Classificação inteligente com Claude AI (se ANTHROPIC_API_KEY configurada)
+    todas_noticias = classificar_noticias(todas_noticias)
+
+    # Re-ordena após classificação da IA (prioridade pode ter mudado)
+    ordem_prioridade = {"Alto": 0, "Médio": 1, "Baixo": 2}
     todas_noticias.sort(
         key=lambda n: (
             ordem_prioridade.get(n.get("prioridade", "Baixo"), 2),
