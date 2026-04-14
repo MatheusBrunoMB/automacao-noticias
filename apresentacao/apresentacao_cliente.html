@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automação de Notícias — Agência FOLKS</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, 'Helvetica Neue', sans-serif;
+      background: #F4F4F4;
+      color: #1A1A1A;
+      line-height: 1.6;
+    }
+
+    /* ── CAPA ─────────────────────────────────────────── */
+    .capa {
+      background: #3D0807;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 40px;
+    }
+    .capa-logo { height: 72px; margin-bottom: 48px; }
+    .capa-supertitulo {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,252,233,0.55);
+      margin-bottom: 20px;
+    }
+    .capa-titulo {
+      font-size: 52px;
+      font-weight: 700;
+      color: #FFFCE9;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .capa-titulo em {
+      font-style: normal;
+      color: #E8795E;
+    }
+    .capa-subtitulo {
+      font-size: 19px;
+      color: rgba(255,252,233,0.72);
+      max-width: 580px;
+      margin: 0 auto 52px auto;
+      line-height: 1.6;
+    }
+    .capa-badge {
+      display: inline-block;
+      background: rgba(255,252,233,0.10);
+      border: 1px solid rgba(255,252,233,0.25);
+      color: rgba(255,252,233,0.85);
+      padding: 10px 32px;
+      border-radius: 30px;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    /* ── LAYOUT GERAL ─────────────────────────────────── */
+    .secao { padding: 88px 40px; }
+    .inner { max-width: 940px; margin: 0 auto; }
+
+    .label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #A9170A;
+      margin-bottom: 12px;
+    }
+    .titulo {
+      font-size: 34px;
+      font-weight: 700;
+      color: #1A1A1A;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .desc {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 48px;
+    }
+
+    /* ── FUNDO ALTERNATIVO ────────────────────────────── */
+    .bg-beige { background: #FFFCE9; }
+    .bg-white  { background: #FFFFFF; }
+    .bg-gray   { background: #F4F4F4; }
+    .bg-vinho  { background: #3D0807; }
+
+    .bg-vinho .label    { color: rgba(255,252,233,0.50); letter-spacing: 3px; }
+    .bg-vinho .titulo   { color: #FFFCE9; }
+    .bg-vinho .desc     { color: rgba(255,252,233,0.72); }
+
+    /* ── CARDS ────────────────────────────────────────── */
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    }
+    .card-icon { font-size: 30px; margin-bottom: 14px; }
+    .card-titulo { font-size: 16px; font-weight: 700; color: #1A1A1A; margin-bottom: 8px; }
+    .card-desc   { font-size: 14px; color: #666; line-height: 1.65; }
+
+    .card-vinho {
+      background: rgba(255,252,233,0.08);
+      border: 1px solid rgba(255,252,233,0.18);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+    .card-vinho .card-icon { font-size: 30px; margin-bottom: 14px; }
+    .card-vinho .card-titulo { color: #FFFCE9; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .card-vinho .card-desc   { color: rgba(255,252,233,0.68); font-size: 14px; line-height: 1.65; }
+
+    /* ── FONTES ───────────────────────────────────────── */
+    .fontes-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 16px;
+    }
+    .fonte-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 18px 20px;
+      border-left: 4px solid #A9170A;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    }
+    .fonte-nome { font-size: 14px; font-weight: 700; color: #1A1A1A; }
+    .fonte-cat  { font-size: 12px; color: #999; margin-top: 4px; }
+
+    /* ── TIMELINE ─────────────────────────────────────── */
+    .timeline {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .step { flex: 1; text-align: center; position: relative; }
+    .step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      top: 20px;
+      right: -16px;
+      font-size: 22px;
+      color: rgba(255,252,233,0.40);
+    }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: #A9170A; color: #FFFCE9;
+      font-size: 18px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px auto;
+    }
+    .step-titulo { font-size: 14px; font-weight: 700; color: #FFFCE9; margin-bottom: 6px; }
+    .step-desc   { font-size: 12px; color: rgba(255,252,233,0.65); line-height: 1.55; }
+
+    /* ── ENTREGÁVEIS ──────────────────────────────────── */
+    .entregavel {
+      display: flex; gap: 24px; align-items: flex-start;
+      background: #fff; border-radius: 12px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      margin-bottom: 18px;
+    }
+    .entregavel-icon { font-size: 40px; flex-shrink: 0; margin-top: 2px; }
+    .entregavel-titulo { font-size: 18px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+    .entregavel-desc   { font-size: 14px; color: #666; line-height: 1.65; }
+
+    /* ── CATEGORIAS ───────────────────────────────────── */
+    .cat-card {
+      background: #fff; border-radius: 12px;
+      padding: 24px 20px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      border-top: 4px solid;
+    }
+    .cat-card.tributario  { border-color: #003087; }
+    .cat-card.legislacao  { border-color: #00695C; }
+    .cat-card.contab      { border-color: #2E7D32; }
+    .cat-card.juridico    { border-color: #4A148C; }
+
+    .cat-nome  { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .cat-itens { font-size: 13px; color: #666; line-height: 1.8; }
+
+    /* ── PRIORIDADES ──────────────────────────────────── */
+    .prio-card {
+      background: #fff; border-radius: 12px;
+      padding: 24px; display: flex;
+      align-items: flex-start; gap: 18px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      margin-bottom: 14px;
+    }
+    .prio-badge {
+      flex-shrink: 0; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      padding: 5px 14px; border-radius: 20px;
+      margin-top: 2px;
+    }
+    .prio-alto   { background: #FFECEC; color: #A9170A; }
+    .prio-medio  { background: #FFF8E1; color: #E65100; }
+    .prio-baixo  { background: #F5F5F5; color: #757575; }
+    .prio-titulo { font-size: 15px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+    .prio-desc   { font-size: 13px; color: #666; line-height: 1.55; }
+
+    /* ── HORÁRIOS ─────────────────────────────────────── */
+    .horario-card {
+      background: rgba(255,252,233,0.12);
+      border: 1px solid rgba(255,252,233,0.20);
+      border-radius: 12px; padding: 28px; text-align: center;
+    }
+    .horario-hora {
+      font-size: 40px; font-weight: 700; color: #FFFCE9;
+      margin-bottom: 6px;
+    }
+    .horario-titulo { font-size: 15px; font-weight: 700; color: #FFFCE9; margin-bottom: 8px; }
+    .horario-desc   { font-size: 13px; color: rgba(255,252,233,0.65); line-height: 1.6; }
+    .horario-freq {
+      display: inline-block; margin-top: 12px;
+      background: #A9170A; color: #FFFCE9;
+      font-size: 11px; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* ── DIVISOR ──────────────────────────────────────── */
+    .divisor {
+      height: 4px;
+      background: linear-gradient(to right, #A9170A, #3D0807);
+    }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    .footer {
+      background: #3D0807; text-align: center; padding: 56px 40px;
+    }
+    .footer-logo   { height: 52px; margin-bottom: 24px; }
+    .footer-texto  {
+      font-size: 15px; color: rgba(255,252,233,0.72);
+      max-width: 520px; margin: 0 auto; line-height: 1.7;
+    }
+    .footer-assin  {
+      margin-top: 32px; font-size: 12px;
+      color: rgba(255,252,233,0.35); letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 760px) {
+      .grid-3, .grid-4, .fontes-grid { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .timeline { flex-direction: column; align-items: center; }
+      .step:not(:last-child)::after { display: none; }
+      .capa-titulo { font-size: 34px; }
+    }
+
+    @media print {
+      .capa { min-height: auto; padding: 60px 40px; page-break-after: always; }
+      .secao { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     CAPA
+══════════════════════════════════════════════════ -->
+<section class="capa">
+  <img src="../logo-folks.png" alt="Agência FOLKS" class="capa-logo" />
+  <p class="capa-supertitulo">Apresentação de Solução</p>
+  <h1 class="capa-titulo">Automação de<br><em>Notícias</em></h1>
+  <p class="capa-subtitulo">
+    Inteligência de conteúdo automática para escritórios de contabilidade e advocacia tributária e previdenciária.
+  </p>
+  <span class="capa-badge">Desenvolvido pela Agência FOLKS</span>
+</section>
+
+<div class="divisor"></div>
+
+<!-- ══════════════════════════════════════════════════
+     O DESAFIO
+══════════════════════════════════════════════════ -->
+<section class="secao bg-white">
+  <div class="inner">
+    <p class="label">O Desafio</p>
+    <h2 class="titulo">Manter-se atualizado<br>dá muito trabalho.</h2>
+    <p class="desc">
+      O universo contábil e jurídico muda constantemente — novas leis, prazos, decisões do STJ e STF, instruções normativas da Receita Federal. Acompanhar tudo isso exige horas de pesquisa diária que poderiam ser dedicadas aos clientes.
+    </p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">📰</div>
+        <div class="card-titulo">Dezenas de fontes</div>
+        <div class="card-desc">São 8 portais especializados para monitorar diariamente, além de feeds do governo e do Senado Federal.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-titulo">Filtrar o que importa</div>
+        <div class="card-desc">Nem tudo que é publicado é relevante para o seu nicho. Separar o que interessa do que não interessa consome tempo.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <div class="card-titulo">Transformar em conteúdo</div>
+        <div class="card-desc">Depois de selecionar, ainda é preciso transformar a notícia em pauta para redes sociais, vídeos e comunicados.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     A SOLUÇÃO
+══════════════════════════════════════════════════ -->
+<section class="secao bg-beige">
+  <div class="inner">
+    <p class="label">A Solução</p>
+    <h2 class="titulo">Criamos um sistema que faz<br>esse trabalho por você.</h2>
+    <p class="desc">
+      A automação monitora as principais fontes de notícias do setor, filtra apenas o que é relevante para contabilidade e direito tributário e previdenciário, e entrega tudo organizado toda semana diretamente na sua caixa de entrada.
+    </p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <div class="card-titulo">Inteligência Artificial</div>
+        <div class="card-desc">Cada notícia é avaliada por um modelo de IA especializado em direito tributário e previdenciário, que define a relevância, a prioridade e já sugere pautas para redes sociais.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-titulo">100% Automático</div>
+        <div class="card-desc">Nenhuma ação manual necessária. O sistema roda sozinho todos os dias e envia o resumo completo toda segunda-feira de manhã, sem você precisar fazer nada.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏷️</div>
+        <div class="card-titulo">Notícias com prioridade</div>
+        <div class="card-desc">Cada notícia recebe uma classificação de prioridade — Alto, Médio ou Baixo — para que sua equipe saiba exatamente o que é urgente e o que é informativo.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <div class="card-titulo">Sugestões de pauta prontas</div>
+        <div class="card-desc">Junto com cada notícia, a IA entrega uma sugestão criativa de pauta para card ou vídeo curto, já formatada para uso imediato pela equipe de conteúdo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     AS FONTES
+══════════════════════════════════════════════════ -->
+<section class="secao bg-gray">
+  <div class="inner">
+    <p class="label">De Onde Vêm as Notícias</p>
+    <h2 class="titulo">8 fontes especializadas<br>monitoradas automaticamente.</h2>
+    <p class="desc">
+      O sistema acessa diariamente os portais mais relevantes para contabilidade, tributário, legislação e direito previdenciário — incluindo fontes oficiais do governo.
+    </p>
+    <div class="fontes-grid">
+      <div class="fonte-item">
+        <div class="fonte-nome">Receita Federal</div>
+        <div class="fonte-cat">Tributário · Oficial</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">Portal Contábeis</div>
+        <div class="fonte-cat">Contabilidade</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">Notícias Fiscais</div>
+        <div class="fonte-cat">Tributário</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">CFC — Conselho Federal de Contabilidade</div>
+        <div class="fonte-cat">Contabilidade · Oficial</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">JOTA Jornalismo</div>
+        <div class="fonte-cat">Jurídico</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">Senado Federal</div>
+        <div class="fonte-cat">Legislação · Oficial</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">SEFAZ-CE</div>
+        <div class="fonte-cat">Legislação · Oficial Ceará</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">Prefeitura de Fortaleza</div>
+        <div class="fonte-cat">Legislação · Oficial Municipal</div>
+      </div>
+      <div class="fonte-item">
+        <div class="fonte-nome">NewsAPI</div>
+        <div class="fonte-cat">Tributário · Buscador nacional</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     COMO FUNCIONA
+══════════════════════════════════════════════════ -->
+<section class="secao bg-vinho">
+  <div class="inner">
+    <p class="label">Como Funciona</p>
+    <h2 class="titulo">Do monitoramento<br>ao seu email em 4 etapas.</h2>
+    <p class="desc" style="margin-bottom:56px;">
+      O processo é completamente automático, rodando nos servidores do GitHub sem custo de hospedagem adicional.
+    </p>
+    <div class="timeline">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-titulo">Coleta</div>
+        <div class="step-desc">Todo dia às 7h, o sistema acessa os 8 portais e captura as notícias mais recentes</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-titulo">Filtro</div>
+        <div class="step-desc">Apenas notícias do nicho contábil, tributário e previdenciário passam para a próxima etapa</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-titulo">IA</div>
+        <div class="step-desc">A Inteligência Artificial avalia cada notícia, define a prioridade e gera sugestão de pauta</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-titulo">Entrega</div>
+        <div class="step-desc">Toda segunda-feira às 8h, o digest completo chega no email com PDF e planilha anexados</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     QUANDO CHEGA
+══════════════════════════════════════════════════ -->
+<section class="secao bg-vinho" style="padding-top:0;">
+  <div class="inner">
+    <p class="label">Calendário de Execução</p>
+    <h2 class="titulo" style="margin-bottom:40px;">Automático. Toda semana. Sem falhas.</h2>
+    <div class="grid-2">
+      <div class="horario-card">
+        <div class="horario-hora">07:00</div>
+        <div class="horario-titulo">Coleta de Notícias</div>
+        <div class="horario-desc">O sistema busca as notícias mais recentes em todos os portais monitorados e as salva com prioridade classificada pela IA.</div>
+        <span class="horario-freq">Todo dia</span>
+      </div>
+      <div class="horario-card">
+        <div class="horario-hora">08:00</div>
+        <div class="horario-titulo">Envio do Digest Semanal</div>
+        <div class="horario-desc">As melhores notícias da semana são compiladas e enviadas por email com o PDF e a planilha de pauta para a equipe de conteúdo.</div>
+        <span class="horario-freq">Toda segunda-feira</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divisor"></div>
+
+<!-- ══════════════════════════════════════════════════
+     O QUE VOCÊ RECEBE
+══════════════════════════════════════════════════ -->
+<section class="secao bg-white">
+  <div class="inner">
+    <p class="label">O Que Você Recebe</p>
+    <h2 class="titulo">Três entregas toda<br>segunda-feira.</h2>
+    <p class="desc">Um único email com tudo que sua equipe precisa para a semana de conteúdo.</p>
+
+    <div class="entregavel">
+      <div class="entregavel-icon">📧</div>
+      <div>
+        <div class="entregavel-titulo">Email HTML formatado</div>
+        <div class="entregavel-desc">Um email visualmente organizado com todas as notícias da semana, agrupadas por categoria e ordenadas por prioridade. Cada notícia vem com badge de prioridade colorido, resumo, fonte, data e sugestão de pauta.</div>
+      </div>
+    </div>
+
+    <div class="entregavel">
+      <div class="entregavel-icon">📄</div>
+      <div>
+        <div class="entregavel-titulo">PDF para arquivo e impressão</div>
+        <div class="entregavel-desc">Versão em PDF do digest completo, ideal para arquivamento, leitura offline ou distribuição interna. Contém todas as notícias com prioridades e sugestões de pauta.</div>
+      </div>
+    </div>
+
+    <div class="entregavel">
+      <div class="entregavel-icon">📊</div>
+      <div>
+        <div class="entregavel-titulo">Planilha Excel — Pauta da Semana</div>
+        <div class="entregavel-desc">Planilha pronta para uso pela equipe de conteúdo, com colunas de formato sugerido (Feed, Reels, Stories), gancho da legenda, desenvolvimento, CTA, hashtags e sugestão visual. Basta abrir e começar a produzir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     CATEGORIAS
+══════════════════════════════════════════════════ -->
+<section class="secao bg-gray">
+  <div class="inner">
+    <p class="label">Categorias de Notícias</p>
+    <h2 class="titulo">Tudo organizado<br>por área de atuação.</h2>
+    <p class="desc">As notícias são automaticamente classificadas em quatro categorias, cobrindo as principais áreas do escritório.</p>
+    <div class="grid-4">
+      <div class="cat-card tributario">
+        <div class="cat-nome" style="color:#003087;">🔵 Tributário</div>
+        <div class="cat-itens">
+          IRPF, IRPJ, ICMS, ISS<br>
+          PIS/COFINS, CSLL<br>
+          Simples Nacional<br>
+          Reforma tributária<br>
+          Receita Federal<br>
+          Prazos e obrigações<br>
+          eSocial, SPED, NF-e
+        </div>
+      </div>
+      <div class="cat-card legislacao">
+        <div class="cat-nome" style="color:#00695C;">🟢 Legislação</div>
+        <div class="cat-itens">
+          Novas leis e decretos<br>
+          Instruções normativas<br>
+          Portarias e resoluções<br>
+          Projetos de lei<br>
+          SEFAZ-CE<br>
+          Prefeitura de Fortaleza<br>
+          Legislação previdenciária
+        </div>
+      </div>
+      <div class="cat-card contab">
+        <div class="cat-nome" style="color:#2E7D32;">🟩 Contabilidade</div>
+        <div class="cat-itens">
+          Normas do CFC e CRC<br>
+          Auditoria fiscal<br>
+          Escrituração contábil<br>
+          Planejamento contábil<br>
+          Notícias do setor<br>
+          Novas obrigações<br>
+          Tecnologia contábil
+        </div>
+      </div>
+      <div class="cat-card juridico">
+        <div class="cat-nome" style="color:#4A148C;">🟣 Jurídico</div>
+        <div class="cat-itens">
+          Decisões do STF e STJ<br>
+          Jurisprudência tributária<br>
+          INSS e aposentadoria<br>
+          Benefícios previdenciários<br>
+          Direito empresarial<br>
+          CARF<br>
+          Planejamento sucessório
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PRIORIDADES
+══════════════════════════════════════════════════ -->
+<section class="secao bg-beige">
+  <div class="inner">
+    <p class="label">Sistema de Prioridades</p>
+    <h2 class="titulo">Saiba o que é urgente<br>sem precisar ler tudo.</h2>
+    <p class="desc">A Inteligência Artificial atribui um nível de prioridade a cada notícia, para que sua equipe saiba onde focar primeiro.</p>
+    <div>
+      <div class="prio-card">
+        <span class="prio-badge prio-alto">🔴 Alto</span>
+        <div>
+          <div class="prio-titulo">Impacto imediato — ação necessária</div>
+          <div class="prio-desc">Nova lei publicada no Diário Oficial, prazo fiscal urgente, decisão definitiva do STF ou STJ com efeito imediato, instrução normativa da Receita Federal, alteração de alíquota já em vigor. São as notícias que exigem comunicação rápida com os clientes.</div>
+        </div>
+      </div>
+      <div class="prio-card">
+        <span class="prio-badge prio-medio">🟡 Médio</span>
+        <div>
+          <div class="prio-titulo">Relevante — acompanhar de perto</div>
+          <div class="prio-desc">Projeto de lei em votação, esclarecimento ou orientação da Receita Federal ou INSS, nova tese tributária em discussão nos tribunais, regulamentação em andamento. Importantes, mas sem urgência imediata.</div>
+        </div>
+      </div>
+      <div class="prio-card">
+        <span class="prio-badge prio-baixo">⚪ Baixo</span>
+        <div>
+          <div class="prio-titulo">Informativo — contexto e educação</div>
+          <div class="prio-desc">Retrospectivas, tendências do setor, curiosidades tributárias e previdenciárias, conteúdo educativo sem urgência imediata. Excelente para pautas de redes sociais mais leves e didáticas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PARA QUE USAR
+══════════════════════════════════════════════════ -->
+<section class="secao bg-white">
+  <div class="inner">
+    <p class="label">Aplicações Práticas</p>
+    <h2 class="titulo">O que sua equipe pode<br>fazer com isso.</h2>
+    <p class="desc">O digest não é só informação — é a base de uma estratégia de conteúdo completa para o escritório.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">📲</div>
+        <div class="card-titulo">Conteúdo para redes sociais</div>
+        <div class="card-desc">Cada notícia vem com sugestão de gancho, desenvolvimento e CTA prontos para virar um card ou Reels no Instagram e LinkedIn.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📹</div>
+        <div class="card-titulo">Roteiros de vídeo</div>
+        <div class="card-desc">Notícias de prioridade Alta e Média são ótimas para vídeos curtos de posicionamento e atualização para clientes.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <div class="card-titulo">Planejamento semanal</div>
+        <div class="card-desc">A planilha Excel entregue toda segunda-feira serve como grade de pauta pronta para a semana, eliminando a reunião de briefing.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📢</div>
+        <div class="card-titulo">Comunicados aos clientes</div>
+        <div class="card-desc">Notícias de prioridade Alta indicam quando o escritório precisa alertar sua base de clientes sobre mudanças urgentes.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📁</div>
+        <div class="card-titulo">Arquivo de referência</div>
+        <div class="card-desc">O PDF semanal forma um acervo histórico de notícias relevantes do setor, útil para consulta e comparação ao longo do tempo.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <div class="card-titulo">Autoridade de mercado</div>
+        <div class="card-desc">Publicar conteúdo atualizado e relevante posiciona o escritório como referência no segmento para clientes e prospects.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divisor"></div>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+<footer class="footer">
+  <img src="../logo-folks.png" alt="Agência FOLKS" class="footer-logo" />
+  <p class="footer-texto">
+    Automatizando o que pode ser automatizado<br>para você focar no que realmente importa.
+  </p>
+  <p class="footer-assin">Agência FOLKS · Automação de Notícias</p>
+</footer>
+
+</body>
+</html>
