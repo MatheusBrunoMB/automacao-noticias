@@ -5,22 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News Semanal</title>
 </head>
-<body style="margin:0;padding:0;background-color:#f4f4f4;font-family:Arial,Helvetica,sans-serif;">
+<body style="margin:0;padding:0;background-color:#FFFCE9;font-family:Arial,Helvetica,sans-serif;">
 
-<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#FFFCE9;">
   <tr>
     <td align="center" style="padding:24px 12px;">
 
       <!-- Container principal -->
-      <table width="680" cellpadding="0" cellspacing="0" style="max-width:680px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+      <table width="680" cellpadding="0" cellspacing="0" style="max-width:680px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(169,23,10,0.10);">
 
         <!-- HEADER -->
         <tr>
-          <td style="background:linear-gradient(135deg,#003087 0%,#0050c8 100%);padding:32px 40px;text-align:center;">
-            <p style="margin:0 0 4px 0;color:#aac4ff;font-size:12px;letter-spacing:2px;text-transform:uppercase;">Agência FOLKS</p>
-            <h1 style="margin:0 0 8px 0;color:#ffffff;font-size:22px;font-weight:700;">News Semanal de Notícias</h1>
-            <p style="margin:0;color:#ccd9f5;font-size:14px;">Contabilidade · Tributário · Previdenciário</p>
-            <p style="margin:12px 0 0 0;color:#ffffff;font-size:13px;background:rgba(255,255,255,0.15);display:inline-block;padding:4px 14px;border-radius:20px;">
+          <td style="background:#A9170A;padding:28px 40px 24px 40px;text-align:center;">
+            {% if logo_b64 %}
+            <img src="data:image/png;base64,{{ logo_b64 }}" alt="Agência FOLKS" height="52" style="display:block;margin:0 auto 16px auto;" />
+            {% else %}
+            <p style="margin:0 0 12px 0;color:#FFFCE9;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;">Agência FOLKS</p>
+            {% endif %}
+            <h1 style="margin:0 0 6px 0;color:#FFFCE9;font-size:20px;font-weight:700;letter-spacing:0.5px;">News Semanal de Notícias</h1>
+            <p style="margin:0;color:rgba(255,252,233,0.85);font-size:13px;">Contabilidade · Tributário · Previdenciário</p>
+            <p style="margin:14px 0 0 0;color:#FFFCE9;font-size:12px;background:rgba(255,255,255,0.15);display:inline-block;padding:4px 16px;border-radius:20px;border:1px solid rgba(255,252,233,0.4);">
               {{ semana_inicio }} a {{ semana_fim }}
             </p>
           </td>
@@ -28,11 +32,11 @@
 
         <!-- RESUMO -->
         <tr>
-          <td style="padding:24px 40px 16px 40px;border-bottom:1px solid #e8edf5;">
+          <td style="padding:22px 40px 14px 40px;border-bottom:1px solid #f0ece0;">
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td style="font-size:14px;color:#555;padding-bottom:12px;">
-                  <strong style="color:#222;">{{ total_noticias }} notícias</strong> coletadas esta semana:
+                <td style="font-size:14px;color:#555;padding-bottom:10px;">
+                  <strong style="color:#A9170A;">{{ total_noticias }} notícias</strong> coletadas esta semana:
                 </td>
               </tr>
               <tr>
@@ -60,26 +64,26 @@
         {% for cat in ordem_categorias %}
         {% if grupos[cat] %}
         <tr>
-          <td style="padding:28px 40px 0 40px;">
+          <td style="padding:26px 40px 0 40px;">
             <!-- Cabeçalho da categoria -->
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
               <tr>
                 <td style="border-left:4px solid {{ cores_categoria[cat] }};padding-left:12px;">
-                  <h2 style="margin:0;font-size:16px;color:{{ cores_categoria[cat] }};font-weight:700;">{{ cat }}</h2>
-                  <p style="margin:2px 0 0 0;font-size:12px;color:#888;">{{ grupos[cat]|length }} notícia{% if grupos[cat]|length > 1 %}s{% endif %}</p>
+                  <h2 style="margin:0;font-size:15px;color:{{ cores_categoria[cat] }};font-weight:700;">{{ cat }}</h2>
+                  <p style="margin:2px 0 0 0;font-size:12px;color:#999;">{{ grupos[cat]|length }} notícia{% if grupos[cat]|length > 1 %}s{% endif %}</p>
                 </td>
               </tr>
             </table>
 
             <!-- Cards de notícias -->
             {% for noticia in grupos[cat] %}
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;border:1px solid #e8edf5;border-radius:6px;overflow:hidden;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;border:1px solid #f0ece0;border-radius:6px;overflow:hidden;">
               <tr>
                 <!-- Faixa de prioridade lateral -->
-                <td width="4" style="background:{% if noticia.prioridade == 'Alto' %}#e53935{% elif noticia.prioridade == 'Médio' %}#f9a825{% else %}#bdbdbd{% endif %};"></td>
-                <td style="padding:16px 20px;">
+                <td width="4" style="background:{% if noticia.prioridade == 'Alto' %}#A9170A{% elif noticia.prioridade == 'Médio' %}#f9a825{% else %}#bdbdbd{% endif %};"></td>
+                <td style="padding:14px 18px;">
 
-                  <!-- Badge de prioridade + título -->
+                  <!-- Badge de prioridade -->
                   <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:8px;">
                     <tr>
                       <td>
@@ -91,7 +95,7 @@
                           padding:2px 8px;
                           border-radius:10px;
                           color:#fff;
-                          background:{% if noticia.prioridade == 'Alto' %}#e53935{% elif noticia.prioridade == 'Médio' %}#f9a825{% else %}#9e9e9e{% endif %};
+                          background:{% if noticia.prioridade == 'Alto' %}#A9170A{% elif noticia.prioridade == 'Médio' %}#f9a825{% else %}#9e9e9e{% endif %};
                         ">
                           {% if noticia.prioridade == 'Alto' %}🔴{% elif noticia.prioridade == 'Médio' %}🟡{% else %}⚪{% endif %}
                           {{ noticia.prioridade }}
@@ -101,12 +105,12 @@
                   </table>
 
                   <!-- Título -->
-                  <h3 style="margin:0 0 6px 0;font-size:15px;color:#1a1a2e;line-height:1.4;">
-                    <a href="{{ noticia.url }}" style="color:#1a1a2e;text-decoration:none;">{{ noticia.titulo }}</a>
+                  <h3 style="margin:0 0 6px 0;font-size:15px;color:#1a1a1a;line-height:1.4;">
+                    <a href="{{ noticia.url }}" style="color:#1a1a1a;text-decoration:none;">{{ noticia.titulo }}</a>
                   </h3>
 
                   <!-- Fonte e data -->
-                  <p style="margin:0 0 10px 0;font-size:12px;color:#888;">
+                  <p style="margin:0 0 10px 0;font-size:12px;color:#999;">
                     {{ noticia.fonte }} &nbsp;|&nbsp; {{ noticia.data_publicacao[:10] }}
                   </p>
 
@@ -121,9 +125,9 @@
                   {% if noticia.sugestao_pauta %}
                   <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
                     <tr>
-                      <td style="background:#f0f4ff;border-left:3px solid {{ cores_categoria[cat] }};padding:8px 12px;border-radius:0 4px 4px 0;">
+                      <td style="background:#FFFCE9;border-left:3px solid #A9170A;padding:8px 12px;border-radius:0 4px 4px 0;">
                         <p style="margin:0;font-size:12px;color:#555;font-style:italic;">
-                          <strong style="color:{{ cores_categoria[cat] }};font-style:normal;">💡 Pauta:</strong>
+                          <strong style="color:#A9170A;font-style:normal;">💡 Pauta:</strong>
                           {{ noticia.sugestao_pauta }}
                         </p>
                       </td>
@@ -135,8 +139,8 @@
                   <a href="{{ noticia.url }}" style="
                     display:inline-block;
                     font-size:12px;
-                    color:{{ cores_categoria[cat] }};
-                    border:1px solid {{ cores_categoria[cat] }};
+                    color:#A9170A;
+                    border:1px solid #A9170A;
                     padding:5px 14px;
                     border-radius:4px;
                     text-decoration:none;
@@ -156,20 +160,20 @@
         <!-- DIVISOR -->
         <tr>
           <td style="padding:0 40px;">
-            <hr style="border:none;border-top:1px solid #e8edf5;margin:24px 0 0 0;" />
+            <hr style="border:none;border-top:1px solid #f0ece0;margin:24px 0 0 0;" />
           </td>
         </tr>
 
         <!-- FOOTER -->
         <tr>
-          <td style="padding:24px 40px 32px 40px;text-align:center;">
-            <p style="margin:0 0 6px 0;font-size:12px;color:#aaa;">
-              Este email foi gerado automaticamente pelo sistema de automação de notícias.
+          <td style="padding:22px 40px 28px 40px;text-align:center;background:#FFFCE9;">
+            <p style="margin:0 0 6px 0;font-size:12px;color:#999;">
+              Este email foi gerado automaticamente pelo sistema de automação de notícias da Agência FOLKS.
             </p>
-            <p style="margin:0 0 6px 0;font-size:12px;color:#aaa;">
-              Semana de <strong>{{ semana_inicio }}</strong> a <strong>{{ semana_fim }}</strong>
+            <p style="margin:0 0 6px 0;font-size:12px;color:#999;">
+              Semana de <strong style="color:#A9170A;">{{ semana_inicio }}</strong> a <strong style="color:#A9170A;">{{ semana_fim }}</strong>
             </p>
-            <p style="margin:0;font-size:11px;color:#ccc;">
+            <p style="margin:0;font-size:11px;color:#bbb;">
               📎 Este email contém dois anexos: <strong>news_semanal.pdf</strong> e <strong>pauta_semanal.xlsx</strong>
             </p>
           </td>

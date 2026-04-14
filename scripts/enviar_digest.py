@@ -4,6 +4,7 @@ Executado pelo GitHub Actions toda segunda-feira às 08h BRT.
 Compila notícias da semana, gera PDF + XLSX e envia por email.
 """
 
+import base64
 import json
 import os
 import smtplib
@@ -28,6 +29,7 @@ from utils import BRT, NOTICIAS_DIR, log_erro, log_info
 
 DIGESTS_DIR = os.path.join(os.path.dirname(__file__), "..", "digests")
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
+LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "logo-folks.png")
 
 GMAIL_REMETENTE = os.environ.get("GMAIL_REMETENTE", "")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
@@ -83,6 +85,11 @@ def _agrupar_por_categoria(noticias: list) -> dict:
 
 
 def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -> str:
+    logo_b64 = ""
+    if os.path.exists(LOGO_PATH):
+        with open(LOGO_PATH, "rb") as f:
+            logo_b64 = base64.b64encode(f.read()).decode("ascii")
+
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
     template = env.get_template("email_digest.html")
     return template.render(
@@ -92,6 +99,7 @@ def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -
         semana_inicio=semana_inicio,
         semana_fim=semana_fim,
         total_noticias=total,
+        logo_b64=logo_b64,
     )
 
 
@@ -129,12 +137,19 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
 
     NL = {"new_x": XPos.LMARGIN, "new_y": YPos.NEXT}
 
-    # Cabeçalho
-    pdf.set_fill_color(0, 48, 135)
-    pdf.rect(0, 0, 210, 38, "F")
+    # Cabeçalho — fundo vermelho FOLKS #A9170A = RGB(169, 23, 10)
+    pdf.set_fill_color(169, 23, 10)
+    pdf.rect(0, 0, 210, 44, "F")
+
+    # Logo
+    if os.path.exists(LOGO_PATH):
+        pdf.image(LOGO_PATH, x=85, y=6, h=14)
+        pdf.set_xy(0, 22)
+    else:
+        pdf.set_xy(0, 10)
+
     pdf.set_font("Helvetica", "B", 16)
-    pdf.set_text_color(255, 255, 255)
-    pdf.set_xy(0, 10)
+    pdf.set_text_color(255, 252, 233)  # #FFFCE9
     pdf.cell(210, 8, "Agencia FOLKS - News Semanal", align="C", **NL)
     pdf.set_font("Helvetica", "", 11)
     pdf.cell(210, 6, f"Contabilidade - Tributario - Previdenciario | {semana_inicio} a {semana_fim}", align="C", **NL)
@@ -209,10 +224,10 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
     """
     from datetime import datetime as _dt
 
-    # --- Paleta ---
-    DARK_NAVY    = "1B2A4A"
-    GOLD         = "C9A84C"
-    LIGHT_GOLD   = "F5E9C8"
+    # --- Paleta FOLKS ---
+    DARK_NAVY    = "A9170A"   # vermelho FOLKS
+    GOLD         = "FFFCE9"   # bege FOLKS (texto nos cabeçalhos)
+    LIGHT_GOLD   = "FAEEE6"   # bege rosado claro para KPIs
     LIGHT_GRAY   = "F2F2F2"
     WHITE        = "FFFFFF"
 
@@ -311,7 +326,7 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
         ws_d.row_dimensions[4].height = 22
         ws_d.row_dimensions[5].height = 36
         cl = ws_d.cell(row=4, column=col, value=label)
-        cl.font = Font(name="Arial", bold=True, size=9, color=DARK_NAVY)
+        cl.font = Font(name="Arial", bold=True, size=9, color="1A1A1A")
         cl.fill = _fill(LIGHT_GOLD)
         cl.alignment = Alignment(horizontal="center", vertical="center")
         cv = ws_d.cell(row=5, column=col, value=valor)
@@ -326,7 +341,7 @@ def _gerar_xlsx(noticias: list, semana_inicio: str, semana_fim: str) -> bytes:
         r = 8 + i
         ws_d.row_dimensions[r].height = 18
         cc = ws_d.cell(row=r, column=1, value=cat)
-        cc.font = Font(name="Arial", bold=True, size=10)
+        cc.font = Font(name="Arial", bold=True, size=10, color=DARK_NAVY)
         cc.fill = _fill(LIGHT_GRAY)
         cq = ws_d.cell(row=r, column=2, value=por_cat.get(cat, 0))
         cq.font = Font(name="Arial", size=10)
