@@ -125,8 +125,11 @@ class PDF(FPDF):
 
 def capa(pdf: PDF):
     pdf.add_page()
-    # fundo vinho
-    pdf.band(0, 297, VINHO)
+    # fundo bege
+    pdf.band(0, 297, BEIGE)
+    # borda inferior vermelha
+    pdf.fill(RED)
+    pdf.rect(0, 293, 210, 4, "F")
     # logo
     if os.path.exists(LOGO_PATH):
         pdf.image(LOGO_PATH, x=75, y=52, h=24)
@@ -135,19 +138,19 @@ def capa(pdf: PDF):
         pdf.set_y(64)
     # supertítulo
     pdf.set_font("Helvetica", "", 8)
-    pdf.ink((180, 140, 130))
+    pdf.set_text_color(93, 13, 6)   # vermelho escurecido (55% do RED)
     pdf.cell(0, 6, "APRESENTACAO DE SOLUCAO", align="C", **NL)
     pdf.ln(6)
     # título
     pdf.set_font("Helvetica", "B", 36)
-    pdf.ink(BEIGE)
+    pdf.ink(RED)
     pdf.cell(0, 14, "Automacao de", align="C", **NL)
-    pdf.ink((232, 121, 94))
+    pdf.ink(VINHO)
     pdf.cell(0, 14, "Noticias", align="C", **NL)
     pdf.ln(8)
     # subtítulo
     pdf.set_font("Helvetica", "", 13)
-    pdf.ink((210, 195, 185))
+    pdf.ink((100, 40, 38))
     pdf.set_x(30)
     pdf.multi_cell(150, 6,
         "Inteligencia de conteudo automatica para escritorios de "
@@ -159,7 +162,7 @@ def capa(pdf: PDF):
     pdf.ink(BEIGE)
     bw = 100
     pdf.set_x((210 - bw) / 2)
-    pdf.fill((90, 20, 18))
+    pdf.fill(RED)
     pdf.rect((210 - bw) / 2, pdf.get_y(), bw, 8, "F")
     pdf.cell(bw, 8, "Desenvolvido pela Agencia FOLKS", align="C", **NL)
 
