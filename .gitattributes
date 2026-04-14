@@ -1,0 +1,9 @@
+# Força LF em todos os arquivos de texto ao commitar
+# (os scripts rodam em Linux no GitHub Actions)
+* text=auto eol=lf
+
+# Arquivos binários — sem conversão
+*.pdf binary
+*.xlsx binary
+*.png binary
+*.jpg binary

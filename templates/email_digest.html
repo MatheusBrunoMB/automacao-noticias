@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digest Semanal</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f4f4;font-family:Arial,Helvetica,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;">
+  <tr>
+    <td align="center" style="padding:24px 12px;">
+
+      <!-- Container principal -->
+      <table width="680" cellpadding="0" cellspacing="0" style="max-width:680px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+        <!-- HEADER -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#003087 0%,#0050c8 100%);padding:32px 40px;text-align:center;">
+            <p style="margin:0 0 4px 0;color:#aac4ff;font-size:12px;letter-spacing:2px;text-transform:uppercase;">Agência de Conteúdo</p>
+            <h1 style="margin:0 0 8px 0;color:#ffffff;font-size:22px;font-weight:700;">Digest Semanal de Notícias</h1>
+            <p style="margin:0;color:#ccd9f5;font-size:14px;">Contabilidade &amp; Direito Tributário</p>
+            <p style="margin:12px 0 0 0;color:#ffffff;font-size:13px;background:rgba(255,255,255,0.15);display:inline-block;padding:4px 14px;border-radius:20px;">
+              {{ semana_inicio }} a {{ semana_fim }}
+            </p>
+          </td>
+        </tr>
+
+        <!-- RESUMO -->
+        <tr>
+          <td style="padding:24px 40px 16px 40px;border-bottom:1px solid #e8edf5;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="font-size:14px;color:#555;padding-bottom:12px;">
+                  <strong style="color:#222;">{{ total_noticias }} notícias</strong> coletadas esta semana:
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table cellpadding="0" cellspacing="0">
+                    <tr>
+                      {% for cat in ordem_categorias %}
+                      {% if grupos[cat] %}
+                      <td style="padding-right:8px;padding-bottom:6px;">
+                        <span style="background:{{ cores_categoria[cat] }};color:#fff;font-size:11px;padding:3px 10px;border-radius:12px;white-space:nowrap;">
+                          {{ cat }} ({{ grupos[cat]|length }})
+                        </span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- SEÇÕES POR CATEGORIA -->
+        {% for cat in ordem_categorias %}
+        {% if grupos[cat] %}
+        <tr>
+          <td style="padding:28px 40px 0 40px;">
+            <!-- Cabeçalho da categoria -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="border-left:4px solid {{ cores_categoria[cat] }};padding-left:12px;">
+                  <h2 style="margin:0;font-size:16px;color:{{ cores_categoria[cat] }};font-weight:700;">{{ cat }}</h2>
+                  <p style="margin:2px 0 0 0;font-size:12px;color:#888;">{{ grupos[cat]|length }} notícia{% if grupos[cat]|length > 1 %}s{% endif %}</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Cards de notícias -->
+            {% for noticia in grupos[cat] %}
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;border:1px solid #e8edf5;border-radius:6px;overflow:hidden;">
+              <tr>
+                <!-- Faixa de prioridade lateral -->
+                <td width="4" style="background:{% if noticia.prioridade == 'Alto' %}#e53935{% elif noticia.prioridade == 'Médio' %}#f9a825{% else %}#bdbdbd{% endif %};"></td>
+                <td style="padding:16px 20px;">
+
+                  <!-- Badge de prioridade + título -->
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:8px;">
+                    <tr>
+                      <td>
+                        <span style="
+                          font-size:10px;
+                          font-weight:700;
+                          text-transform:uppercase;
+                          letter-spacing:1px;
+                          padding:2px 8px;
+                          border-radius:10px;
+                          color:#fff;
+                          background:{% if noticia.prioridade == 'Alto' %}#e53935{% elif noticia.prioridade == 'Médio' %}#f9a825{% else %}#9e9e9e{% endif %};
+                        ">
+                          {% if noticia.prioridade == 'Alto' %}🔴{% elif noticia.prioridade == 'Médio' %}🟡{% else %}⚪{% endif %}
+                          {{ noticia.prioridade }}
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Título -->
+                  <h3 style="margin:0 0 6px 0;font-size:15px;color:#1a1a2e;line-height:1.4;">
+                    <a href="{{ noticia.url }}" style="color:#1a1a2e;text-decoration:none;">{{ noticia.titulo }}</a>
+                  </h3>
+
+                  <!-- Fonte e data -->
+                  <p style="margin:0 0 10px 0;font-size:12px;color:#888;">
+                    {{ noticia.fonte }} &nbsp;|&nbsp; {{ noticia.data_publicacao[:10] }}
+                  </p>
+
+                  <!-- Resumo -->
+                  {% if noticia.resumo %}
+                  <p style="margin:0 0 12px 0;font-size:13px;color:#444;line-height:1.6;">
+                    {{ noticia.resumo[:300] }}{% if noticia.resumo|length > 300 %}...{% endif %}
+                  </p>
+                  {% endif %}
+
+                  <!-- Sugestão de pauta -->
+                  {% if noticia.sugestao_pauta %}
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
+                    <tr>
+                      <td style="background:#f0f4ff;border-left:3px solid {{ cores_categoria[cat] }};padding:8px 12px;border-radius:0 4px 4px 0;">
+                        <p style="margin:0;font-size:12px;color:#555;font-style:italic;">
+                          <strong style="color:{{ cores_categoria[cat] }};font-style:normal;">💡 Pauta:</strong>
+                          {{ noticia.sugestao_pauta }}
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                  {% endif %}
+
+                  <!-- Botão Ler mais -->
+                  <a href="{{ noticia.url }}" style="
+                    display:inline-block;
+                    font-size:12px;
+                    color:{{ cores_categoria[cat] }};
+                    border:1px solid {{ cores_categoria[cat] }};
+                    padding:5px 14px;
+                    border-radius:4px;
+                    text-decoration:none;
+                    font-weight:600;
+                  ">Ler mais →</a>
+
+                </td>
+              </tr>
+            </table>
+            {% endfor %}
+
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+
+        <!-- DIVISOR -->
+        <tr>
+          <td style="padding:0 40px;">
+            <hr style="border:none;border-top:1px solid #e8edf5;margin:24px 0 0 0;" />
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="padding:24px 40px 32px 40px;text-align:center;">
+            <p style="margin:0 0 6px 0;font-size:12px;color:#aaa;">
+              Este email foi gerado automaticamente pelo sistema de automação de notícias.
+            </p>
+            <p style="margin:0 0 6px 0;font-size:12px;color:#aaa;">
+              Semana de <strong>{{ semana_inicio }}</strong> a <strong>{{ semana_fim }}</strong>
+            </p>
+            <p style="margin:0;font-size:11px;color:#ccc;">
+              📎 Este email contém dois anexos: <strong>digest_semanal.pdf</strong> e <strong>pauta_semanal.xlsx</strong>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+      <!-- /Container principal -->
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

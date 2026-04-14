@@ -1,0 +1,45 @@
+name: Coletar Notícias Diárias
+
+on:
+  schedule:
+    # Todo dia às 10:00 UTC = 07:00 BRT
+    - cron: '0 10 * * *'
+  # Permite disparar manualmente pelo GitHub UI
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Coletar notícias
+        env:
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+        run: python scripts/coletar_noticias.py
+
+      - name: Commit e push das notícias
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add noticias/
+          # Só faz commit se houver arquivos novos ou modificados
+          git diff --staged --quiet || git commit -m "noticias: $(date +%Y-%m-%d)"
+          git push
