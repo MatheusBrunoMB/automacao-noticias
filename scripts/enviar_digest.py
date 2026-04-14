@@ -13,14 +13,14 @@ from datetime import datetime, timedelta
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from io import BytesIO
+from io import BytesIO  # usado pelo openpyxl
 
 import pytz
+from fpdf import FPDF
 from jinja2 import Environment, FileSystemLoader
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
-from xhtml2pdf import pisa
 
 sys.path.insert(0, os.path.dirname(__file__))
 from fontes import CORES_CATEGORIA, ORDEM_CATEGORIAS
@@ -101,11 +101,93 @@ def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -
     )
 
 
-def _gerar_pdf(html: str) -> bytes:
-    """Converte HTML em PDF usando xhtml2pdf e retorna os bytes."""
-    buffer = BytesIO()
-    pisa.CreatePDF(html.encode("utf-8"), dest=buffer)
-    return buffer.getvalue()
+def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -> bytes:
+    """Gera PDF do digest usando fpdf2 (puro Python, sem dependências de sistema)."""
+    ordem_prio = {"Alto": 0, "Médio": 1, "Baixo": 2}
+    icone_prio = {"Alto": "[ALTO]", "Médio": "[MEDIO]", "Baixo": "[BAIXO]"}
+    cor_prio = {
+        "Alto":  (229, 57, 53),
+        "Médio": (249, 168, 37),
+        "Baixo": (158, 158, 158),
+    }
+
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.set_margins(15, 15, 15)
+    pdf.add_page()
+
+    # Cabeçalho
+    pdf.set_fill_color(0, 48, 135)
+    pdf.rect(0, 0, 210, 38, "F")
+    pdf.set_font("Helvetica", "B", 16)
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_xy(0, 10)
+    pdf.cell(210, 8, "Digest Semanal de Noticias", align="C", ln=True)
+    pdf.set_font("Helvetica", "", 11)
+    pdf.cell(210, 6, f"Contabilidade & Direito Tributario — {semana_inicio} a {semana_fim}", align="C", ln=True)
+    pdf.cell(210, 6, f"Total: {total} noticias coletadas", align="C", ln=True)
+    pdf.ln(12)
+
+    pdf.set_text_color(0, 0, 0)
+
+    for cat in ORDEM_CATEGORIAS:
+        itens = grupos.get(cat, [])
+        if not itens:
+            continue
+
+        # Título da categoria
+        pdf.set_font("Helvetica", "B", 13)
+        pdf.set_fill_color(240, 240, 245)
+        pdf.cell(0, 9, f"  {cat}  ({len(itens)} noticias)", ln=True, fill=True)
+        pdf.ln(3)
+
+        for n in itens:
+            prio = n.get("prioridade", "Baixo")
+            r, g, b = cor_prio.get(prio, (158, 158, 158))
+
+            # Badge de prioridade
+            pdf.set_font("Helvetica", "B", 8)
+            pdf.set_text_color(r, g, b)
+            pdf.cell(0, 5, icone_prio.get(prio, ""), ln=True)
+
+            # Título
+            pdf.set_font("Helvetica", "B", 10)
+            pdf.set_text_color(26, 26, 46)
+            titulo = n.get("titulo", "")
+            pdf.multi_cell(0, 5, titulo)
+
+            # Fonte e data
+            pdf.set_font("Helvetica", "", 8)
+            pdf.set_text_color(120, 120, 120)
+            pdf.cell(0, 5, f"{n.get('fonte', '')}  |  {n.get('data_publicacao', '')[:10]}", ln=True)
+
+            # Resumo
+            resumo = n.get("resumo", "")[:280]
+            if resumo:
+                pdf.set_font("Helvetica", "", 9)
+                pdf.set_text_color(70, 70, 70)
+                pdf.multi_cell(0, 5, resumo)
+
+            # Sugestão de pauta
+            pauta = n.get("sugestao_pauta", "")
+            if pauta:
+                pdf.set_font("Helvetica", "I", 9)
+                pdf.set_text_color(80, 80, 140)
+                pdf.multi_cell(0, 5, f"Pauta: {pauta}")
+
+            # URL
+            pdf.set_font("Helvetica", "U", 8)
+            pdf.set_text_color(0, 80, 200)
+            url = n.get("url", "")
+            if url:
+                pdf.cell(0, 5, url[:90], ln=True, link=url)
+
+            pdf.set_draw_color(220, 220, 220)
+            pdf.line(15, pdf.get_y() + 2, 195, pdf.get_y() + 2)
+            pdf.ln(6)
+            pdf.set_text_color(0, 0, 0)
+
+    return bytes(pdf.output())
 
 
 def _gerar_xlsx(noticias: list) -> bytes:
@@ -248,7 +330,7 @@ def main():
     html = _gerar_html(grupos, semana_inicio, semana_fim, total)
 
     log_info("Gerando PDF...")
-    pdf_bytes = _gerar_pdf(html)
+    pdf_bytes = _gerar_pdf(grupos, semana_inicio, semana_fim, total)
 
     log_info("Gerando planilha XLSX...")
     xlsx_bytes = _gerar_xlsx(noticias)

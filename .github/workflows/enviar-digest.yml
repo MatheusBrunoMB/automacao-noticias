@@ -30,11 +30,6 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Instalar dependências do sistema (necessário para xhtml2pdf)
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libpangocairo-1.0-0 libffi-dev libgdk-pixbuf2.0-0 libcairo2
-
       - name: Instalar dependências Python
         run: pip install -r requirements-digest.txt
 
