@@ -29,7 +29,8 @@ from utils import BRT, NOTICIAS_DIR, log_erro, log_info
 
 DIGESTS_DIR = os.path.join(os.path.dirname(__file__), "..", "digests")
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
-LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "logo-folks.png")
+LOGO_QUADRADO   = os.path.join(os.path.dirname(__file__), "..", "logo_quadrado.png")
+LOGO_HORIZONTAL = os.path.join(os.path.dirname(__file__), "..", "logo_horizontal.png")
 
 GMAIL_REMETENTE = os.environ.get("GMAIL_REMETENTE", "")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
@@ -94,7 +95,8 @@ def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -
         semana_inicio=semana_inicio,
         semana_fim=semana_fim,
         total_noticias=total,
-        has_logo=os.path.exists(LOGO_PATH),
+        has_logo_quadrado=os.path.exists(LOGO_QUADRADO),
+        has_logo_horizontal=os.path.exists(LOGO_HORIZONTAL),
     )
 
 
@@ -138,9 +140,9 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
     pdf.set_fill_color(169, 23, 10)
     pdf.rect(0, 42, 210, 2, "F")  # borda inferior vermelha
 
-    # Logo
-    if os.path.exists(LOGO_PATH):
-        pdf.image(LOGO_PATH, x=85, y=6, h=14)
+    # Logo quadrado no cabeçalho
+    if os.path.exists(LOGO_QUADRADO):
+        pdf.image(LOGO_QUADRADO, x=96, y=6, h=14)
         pdf.set_xy(0, 22)
     else:
         pdf.set_xy(0, 10)
@@ -470,18 +472,20 @@ def _enviar_email(
     texto_simples = "News semanal disponível. Abra este email em um cliente que suporte HTML."
     alt.attach(MIMEText(texto_simples, "plain", "utf-8"))
 
-    if os.path.exists(LOGO_PATH):
-        # HTML + imagem inline via CID (funciona em Gmail, Outlook, Apple Mail)
-        related = MIMEMultipart("related")
-        related.attach(MIMEText(html_body, "html", "utf-8"))
-        with open(LOGO_PATH, "rb") as f:
-            logo_img = MIMEImage(f.read(), _subtype="png")
-        logo_img.add_header("Content-ID", "<logo-folks>")
-        logo_img.add_header("Content-Disposition", "inline", filename="logo-folks.png")
-        related.attach(logo_img)
-        alt.attach(related)
-    else:
-        alt.attach(MIMEText(html_body, "html", "utf-8"))
+    # HTML + imagens inline via CID
+    related = MIMEMultipart("related")
+    related.attach(MIMEText(html_body, "html", "utf-8"))
+    for cid, path, filename in [
+        ("logo-quadrado",   LOGO_QUADRADO,   "logo_quadrado.png"),
+        ("logo-horizontal", LOGO_HORIZONTAL, "logo_horizontal.png"),
+    ]:
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                img = MIMEImage(f.read(), _subtype="png")
+            img.add_header("Content-ID", f"<{cid}>")
+            img.add_header("Content-Disposition", "inline", filename=filename)
+            related.attach(img)
+    alt.attach(related)
 
     msg.attach(alt)
 

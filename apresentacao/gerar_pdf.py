@@ -7,10 +7,11 @@ Execute na pasta raiz do projeto:
 import os
 from fpdf import FPDF, XPos, YPos
 
-BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-RAIZ      = os.path.join(BASE_DIR, "..")
-LOGO_PATH = os.path.join(RAIZ, "logo-folks.png")
-SAIDA     = os.path.join(BASE_DIR, "apresentacao_cliente.pdf")
+BASE_DIR        = os.path.dirname(os.path.abspath(__file__))
+RAIZ            = os.path.join(BASE_DIR, "..")
+LOGO_QUADRADO   = os.path.join(RAIZ, "logo_quadrado.png")
+LOGO_HORIZONTAL = os.path.join(RAIZ, "logo_horizontal.png")
+SAIDA           = os.path.join(BASE_DIR, "apresentacao_cliente.pdf")
 
 # Paleta FOLKS
 VINHO   = (61,   8,   7)
@@ -133,8 +134,8 @@ def capa(pdf: PDF):
     pdf.fill(RED)
     pdf.rect(0, 293, 210, 4, "F")
 
-    if os.path.exists(LOGO_PATH):
-        pdf.image(LOGO_PATH, x=75, y=52, h=24)
+    if os.path.exists(LOGO_QUADRADO):
+        pdf.image(LOGO_QUADRADO, x=88, y=48, h=28)
         pdf.set_y(84)
     else:
         pdf.set_y(64)
@@ -507,8 +508,13 @@ def aplicacoes(pdf: PDF):
     pdf.cell(0, 5,
         "Automatizando o que pode ser automatizado para você focar no que realmente importa.",
         align="C", **NL)
-    pdf.set_font(FONT, "B", 9); pdf.ink(RED)
-    pdf.cell(0, 5, "Agência FOLKS", align="C", **NL)
+    pdf.ln(4)
+    if os.path.exists(LOGO_HORIZONTAL):
+        logo_w = 60
+        pdf.image(LOGO_HORIZONTAL, x=(210 - logo_w) / 2, y=pdf.get_y(), w=logo_w)
+    else:
+        pdf.set_font(FONT, "B", 9); pdf.ink(RED)
+        pdf.cell(0, 5, "Agência FOLKS", align="C", **NL)
 
 
 def main():

@@ -17,8 +17,8 @@
         <!-- HEADER -->
         <tr>
           <td style="background:#FFFCE9;padding:28px 40px 24px 40px;text-align:center;border-bottom:3px solid #A9170A;">
-            {% if has_logo %}
-            <img src="cid:logo-folks" alt="Agência FOLKS" height="52" style="display:block;margin:0 auto 16px auto;" />
+            {% if has_logo_quadrado %}
+            <img src="cid:logo-quadrado" alt="Agência FOLKS" height="60" style="display:block;margin:0 auto 16px auto;" />
             {% else %}
             <p style="margin:0 0 12px 0;color:#A9170A;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;">Agência FOLKS</p>
             {% endif %}
@@ -167,6 +167,11 @@
         <!-- FOOTER -->
         <tr>
           <td style="padding:22px 40px 28px 40px;text-align:center;background:#A9170A;">
+            {% if has_logo_horizontal %}
+            <img src="cid:logo-horizontal" alt="Agência FOLKS" height="36" style="display:block;margin:0 auto 16px auto;" />
+            {% else %}
+            <p style="margin:0 0 12px 0;color:#FFFCE9;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;">Agência FOLKS</p>
+            {% endif %}
             <p style="margin:0 0 6px 0;font-size:12px;color:rgba(255,252,233,0.80);">
               Este email foi gerado automaticamente pelo sistema de automação de notícias da Agência FOLKS.
             </p>
