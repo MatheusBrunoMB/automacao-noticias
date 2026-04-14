@@ -36,7 +36,7 @@ jobs:
           sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libpangocairo-1.0-0 libffi-dev libgdk-pixbuf2.0-0 libcairo2
 
       - name: Instalar dependências Python
-        run: pip install -r requirements.txt
+        run: pip install -r requirements-digest.txt
 
       - name: Compilar e enviar digest
         env:
