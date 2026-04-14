@@ -172,7 +172,7 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
             # Título
             pdf.set_font("Helvetica", "B", 10)
             pdf.set_text_color(26, 26, 46)
-            pdf.multi_cell(0, 5, _pdf_txt(n.get("titulo", "")))
+            pdf.multi_cell(0, 5, _pdf_txt(n.get("titulo", "")), **NL)
 
             # Fonte e data
             pdf.set_font("Helvetica", "", 8)
@@ -184,14 +184,14 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
             if resumo:
                 pdf.set_font("Helvetica", "", 9)
                 pdf.set_text_color(70, 70, 70)
-                pdf.multi_cell(0, 5, _pdf_txt(resumo))
+                pdf.multi_cell(0, 5, _pdf_txt(resumo), **NL)
 
             # Sugestão de pauta
             pauta = n.get("sugestao_pauta", "")
             if pauta:
                 pdf.set_font("Helvetica", "I", 9)
                 pdf.set_text_color(80, 80, 140)
-                pdf.multi_cell(0, 5, _pdf_txt(f"Pauta: {pauta}"))
+                pdf.multi_cell(0, 5, _pdf_txt(f"Pauta: {pauta}"), **NL)
 
             # URL
             url = n.get("url", "")
