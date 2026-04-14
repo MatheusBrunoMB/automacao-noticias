@@ -5,7 +5,7 @@ são aceitas com critério mais amplo; fontes gerais (JOTA, Senado)
 exigem match no título.
 """
 
-from fontes import PALAVRAS_CHAVE_INCLUSAO
+from fontes import PALAVRAS_CHAVE_INCLUSAO, PALAVRAS_CHAVE_EXCLUSAO
 
 # Fontes já especializadas no nicho — filtro mais permissivo
 FONTES_ESPECIALIZADAS = {
@@ -26,12 +26,17 @@ def eh_relevante(noticia: dict) -> bool:
     Retorna True se a notícia for relevante para o nicho.
 
     Critérios:
-    - Fontes especializadas: aceita se título OU resumo contém palavra-chave.
+    - Rejeita imediatamente se o TÍTULO contém palavra de exclusão (policial/crime).
+    - Fontes especializadas: aceita se título OU resumo contém palavra-chave de inclusão.
     - Fontes gerais (JOTA, Senado, NewsAPI): exige match no título.
     """
     titulo = noticia.get("titulo", "")
     resumo = noticia.get("resumo", "")
     fonte = noticia.get("fonte", "")
+
+    # Filtro de exclusão — rejeita conteúdo policial/criminal sem relevância contábil
+    if _contem_palavra_chave(titulo, PALAVRAS_CHAVE_EXCLUSAO):
+        return False
 
     titulo_ok = _contem_palavra_chave(titulo, PALAVRAS_CHAVE_INCLUSAO)
 

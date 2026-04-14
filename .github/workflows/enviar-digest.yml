@@ -1,4 +1,4 @@
-name: Enviar Digest Semanal
+name: Enviar News Semanal
 
 on:
   schedule:
@@ -14,7 +14,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  digest:
+  news:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -33,7 +33,7 @@ jobs:
       - name: Instalar dependências Python
         run: pip install -r requirements-digest.txt
 
-      - name: Compilar e enviar digest
+      - name: Compilar e enviar news
         env:
           GMAIL_REMETENTE: ${{ secrets.GMAIL_REMETENTE }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
@@ -44,10 +44,10 @@ jobs:
         run: |
           find noticias/ -name "*.json" -mtime +90 -delete || true
 
-      - name: Commit e push dos digests
+      - name: Commit e push das news
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add digests/ noticias/
-          git diff --staged --quiet || git commit -m "digest: $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "news: $(date +%Y-%m-%d)"
           git push

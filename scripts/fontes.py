@@ -135,6 +135,28 @@ PALAVRAS_CHAVE_MEDIA_PRIORIDADE = [
     "fisco",
 ]
 
+# Palavras que indicam conteúdo policial/criminal SEM relevância fiscal ou contábil.
+# Se encontradas no TÍTULO, a notícia é rejeitada independentemente da fonte.
+PALAVRAS_CHAVE_EXCLUSAO = [
+    "contrabando", "contrabandeado", "contrabandeados", "contrabandeada",
+    "narcotráfico", "narcotrafico",
+    "tráfico de drogas", "trafico de drogas",
+    "tráfico de entorpecentes", "trafico de entorpecentes",
+    "entorpecente", "entorpecentes",
+    "drogas apreendidas", "droga apreendida",
+    "medicamentos apreendidos", "medicamento apreendido",
+    "cigarros apreendidos", "cigarro apreendido",
+    "armas apreendidas", "arma apreendida",
+    "mercadoria contrabandeada", "mercadorias contrabandeadas",
+    "homicídio", "homicidio",
+    "assassinato",
+    "sequestro",
+    "mandado de prisão", "mandado de prisao",
+    "preso em flagrante",
+    "operação policial",
+    "traficante", "traficantes",
+]
+
 # Mapeamento de cores por categoria para uso no email e PDF
 CORES_CATEGORIA = {
     "Receita Federal": "#003087",

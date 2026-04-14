@@ -1,5 +1,5 @@
 """
-Script de digest semanal.
+Script de news semanal — Agência FOLKS.
 Executado pelo GitHub Actions toda segunda-feira às 08h BRT.
 Compila notícias da semana, gera PDF + XLSX e envia por email.
 """
@@ -141,7 +141,7 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
     pdf.set_font("Helvetica", "B", 16)
     pdf.set_text_color(255, 255, 255)
     pdf.set_xy(0, 10)
-    pdf.cell(210, 8, "Digest Semanal de Noticias", align="C", **NL)
+    pdf.cell(210, 8, "Agencia FOLKS - News Semanal", align="C", **NL)
     pdf.set_font("Helvetica", "", 11)
     pdf.cell(210, 6, f"Contabilidade & Direito Tributario - {semana_inicio} a {semana_fim}", align="C", **NL)
     pdf.cell(210, 6, f"Total: {total} noticias coletadas", align="C", **NL)
@@ -290,14 +290,14 @@ def _enviar_email(
 
     # Parte alternativa (texto simples + HTML)
     alt = MIMEMultipart("alternative")
-    texto_simples = "Digest semanal disponível. Abra este email em um cliente que suporte HTML."
+    texto_simples = "News semanal disponível. Abra este email em um cliente que suporte HTML."
     alt.attach(MIMEText(texto_simples, "plain", "utf-8"))
     alt.attach(MIMEText(html_body, "html", "utf-8"))
     msg.attach(alt)
 
     # Anexo PDF
     pdf_part = MIMEApplication(pdf_bytes, _subtype="pdf")
-    pdf_part.add_header("Content-Disposition", "attachment", filename="digest_semanal.pdf")
+    pdf_part.add_header("Content-Disposition", "attachment", filename="news_semanal.pdf")
     msg.attach(pdf_part)
 
     # Anexo XLSX
@@ -326,7 +326,7 @@ def _enviar_email(
 
 
 def main():
-    log_info("Iniciando compilação do digest semanal")
+    log_info("Iniciando compilação da news semanal — Agência FOLKS")
 
     hoje = datetime.now(BRT).date()
     semana_inicio = (hoje - timedelta(days=6)).strftime("%d/%m/%Y")
@@ -337,7 +337,7 @@ def main():
     log_info(f"Total de notícias carregadas: {len(noticias)}")
 
     if not noticias:
-        log_info("Nenhuma notícia encontrada para a semana. Digest não enviado.")
+        log_info("Nenhuma notícia encontrada para a semana. News não enviada.")
         return
 
     grupos = _agrupar_por_categoria(noticias)
@@ -355,9 +355,9 @@ def main():
 
     # Salva arquivos localmente (commitados no repo como arquivo)
     os.makedirs(DIGESTS_DIR, exist_ok=True)
-    with open(os.path.join(DIGESTS_DIR, f"{data_arquivo}_digest.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(DIGESTS_DIR, f"{data_arquivo}_news.html"), "w", encoding="utf-8") as f:
         f.write(html)
-    with open(os.path.join(DIGESTS_DIR, f"{data_arquivo}_digest.pdf"), "wb") as f:
+    with open(os.path.join(DIGESTS_DIR, f"{data_arquivo}_news.pdf"), "wb") as f:
         f.write(pdf_bytes)
     with open(os.path.join(DIGESTS_DIR, f"{data_arquivo}_pauta.xlsx"), "wb") as f:
         f.write(xlsx_bytes)
@@ -370,11 +370,11 @@ def main():
 
     destinatarios = [e.strip() for e in DESTINATARIOS_STR.split(",") if e.strip()]
     assunto = (
-        f"[Digest Semanal] Notícias Contabilidade e Tributário "
+        f"[News Semanal] Notícias Contabilidade e Tributário "
         f"— {semana_inicio} a {semana_fim}"
     )
     _enviar_email(html, pdf_bytes, xlsx_bytes, assunto, destinatarios)
-    log_info("Digest semanal concluído com sucesso.")
+    log_info("News semanal concluída com sucesso.")
 
 
 if __name__ == "__main__":
