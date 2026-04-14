@@ -44,24 +44,24 @@ def calcular_prioridade(noticia: dict) -> str:
 
 # Templates de sugestão de pauta por (prioridade, categoria)
 _TEMPLATES = {
-    ("Alto", "Receita Federal"):  "🚨 URGENTE — {titulo}: explique o impacto direto para seus clientes",
-    ("Alto", "Legislação"):       "📋 Nova legislação ou prazo: crie um checklist sobre "{titulo}"",
-    ("Alto", "Tributário"):       "⚠️ Alerta tributário: o que muda para seus clientes com "{titulo}"",
-    ("Alto", "Contabilidade"):    "🔔 Atenção: "{titulo}" — card com os pontos de atenção do contador",
-    ("Alto", "Jurídico"):         "⚖️ Decisão importante: simplifique "{titulo}" para leigos",
-    ("Médio", "Receita Federal"): "📌 Atualização da Receita Federal: "{titulo}" — o que você precisa saber",
-    ("Médio", "Tributário"):      "💡 Entenda "{titulo}" — card educativo para redes sociais",
-    ("Médio", "Contabilidade"):   "📊 Dica contábil: simplifique "{titulo}" em 5 pontos práticos",
-    ("Médio", "Legislação"):      "📜 Legislação em pauta: "{titulo}" — explique de forma acessível",
-    ("Médio", "Jurídico"):        "⚖️ Jurídico descomplicado: o que significa "{titulo}" na prática",
-    ("Baixo", "Receita Federal"): "📰 Contexto: "{titulo}" — pode ser legenda ou enquete no Instagram",
-    ("Baixo", "Tributário"):      "📰 Notícia de contexto: "{titulo}" — ótima para enquete ou curiosidade",
-    ("Baixo", "Contabilidade"):   "📰 Conteúdo informativo: "{titulo}" — bom para post de engajamento",
-    ("Baixo", "Legislação"):      "📰 Legislação para conhecer: "{titulo}" — post tipo 'Você sabia?'",
-    ("Baixo", "Jurídico"):        "📰 Contexto jurídico: "{titulo}" — pode ser usado em carrossel educativo",
+    ("Alto", "Receita Federal"):  '🚨 URGENTE — {titulo}: explique o impacto direto para seus clientes',
+    ("Alto", "Legislação"):       '📋 Nova legislação ou prazo: crie um checklist sobre "{titulo}"',
+    ("Alto", "Tributário"):       '⚠️ Alerta tributário: o que muda para seus clientes com "{titulo}"',
+    ("Alto", "Contabilidade"):    '🔔 Atenção: "{titulo}" — card com os pontos de atenção do contador',
+    ("Alto", "Jurídico"):         '⚖️ Decisão importante: simplifique "{titulo}" para leigos',
+    ("Médio", "Receita Federal"): '📌 Atualização da Receita Federal: "{titulo}" — o que você precisa saber',
+    ("Médio", "Tributário"):      '💡 Entenda "{titulo}" — card educativo para redes sociais',
+    ("Médio", "Contabilidade"):   '📊 Dica contábil: simplifique "{titulo}" em 5 pontos práticos',
+    ("Médio", "Legislação"):      '📜 Legislação em pauta: "{titulo}" — explique de forma acessível',
+    ("Médio", "Jurídico"):        '⚖️ Jurídico descomplicado: o que significa "{titulo}" na prática',
+    ("Baixo", "Receita Federal"): '📰 Contexto: "{titulo}" — pode ser legenda ou enquete no Instagram',
+    ("Baixo", "Tributário"):      '📰 Notícia de contexto: "{titulo}" — ótima para enquete ou curiosidade',
+    ("Baixo", "Contabilidade"):   '📰 Conteúdo informativo: "{titulo}" — bom para post de engajamento',
+    ("Baixo", "Legislação"):      '📰 Legislação para conhecer: "{titulo}" — post tipo "Você sabia?"',
+    ("Baixo", "Jurídico"):        '📰 Contexto jurídico: "{titulo}" — pode ser usado em carrossel educativo',
 }
 
-_TEMPLATE_PADRAO = "📰 Notícia relevante: "{titulo}" — avalie o potencial de conteúdo para seus clientes"
+_TEMPLATE_PADRAO = '📰 Notícia relevante: "{titulo}" — avalie o potencial de conteúdo para seus clientes'
 
 
 def gerar_sugestao_pauta(noticia: dict) -> str:
