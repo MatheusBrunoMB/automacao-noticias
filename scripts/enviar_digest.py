@@ -143,7 +143,7 @@ def _gerar_pdf(grupos: dict, semana_inicio: str, semana_fim: str, total: int) ->
     pdf.set_xy(0, 10)
     pdf.cell(210, 8, "Agencia FOLKS - News Semanal", align="C", **NL)
     pdf.set_font("Helvetica", "", 11)
-    pdf.cell(210, 6, f"Contabilidade & Direito Tributario - {semana_inicio} a {semana_fim}", align="C", **NL)
+    pdf.cell(210, 6, f"Contabilidade - Tributario - Previdenciario | {semana_inicio} a {semana_fim}", align="C", **NL)
     pdf.cell(210, 6, f"Total: {total} noticias coletadas", align="C", **NL)
     pdf.ln(12)
 

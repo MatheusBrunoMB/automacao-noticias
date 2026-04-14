@@ -94,6 +94,21 @@ PALAVRAS_CHAVE_INCLUSAO = [
     "auditoria fiscal",
     "planejamento tributário", "elisão fiscal",
     "compliance fiscal",
+    # Previdenciário
+    "previdenciário", "previdenciaria", "previdenciário",
+    "INSS", "aposentadoria",
+    "pensão por morte", "pensao por morte",
+    "auxílio-doença", "auxilio-doenca", "auxílio acidente",
+    "salário-maternidade", "salario-maternidade",
+    "BPC", "LOAS",
+    "contribuição previdenciária", "contribuicao previdenciaria",
+    "RGPS", "RPPS",
+    "benefício previdenciário", "beneficio previdenciario",
+    "tempo de contribuição", "fator previdenciário",
+    "planejamento previdenciário",
+    "perícia médica INSS", "pericia medica INSS",
+    "revisão de benefício", "revisao de beneficio",
+    "direito previdenciário", "direito previdenciario",
 ]
 
 # Palavras que indicam notícia de ALTA prioridade (impacto imediato nos clientes)
