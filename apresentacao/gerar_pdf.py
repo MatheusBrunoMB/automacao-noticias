@@ -502,10 +502,10 @@ def aplicacoes(pdf: PDF):
     ]:
         pdf.card(titulo, desc)
 
-    pdf.ln(6)
-    # ── Rodapé vermelho ──────────────────────────────────────
-    y_footer = pdf.get_y()
+    # ── Rodapé vermelho — fixo na base da página A4 ──────────
     footer_h = 34
+    y_footer  = 297 - footer_h          # A4 = 297 mm; cola no fundo
+    pdf.set_auto_page_break(False)
     pdf.fill(RED)
     pdf.rect(0, y_footer, 210, footer_h, "F")
     # Tagline
@@ -515,15 +515,16 @@ def aplicacoes(pdf: PDF):
     pdf.cell(210, 5,
         "Automatizando o que pode ser automatizado para você focar no que realmente importa.",
         align="C", **NL)
-    # Logo horizontal centralizado
+    # Logo horizontal centralizada — tamanho reduzido para preservar qualidade
     if os.path.exists(LOGO_HORIZONTAL):
-        logo_w = 75
+        logo_w = 50
         pdf.image(LOGO_HORIZONTAL, x=(210 - logo_w) / 2, y=y_footer + 13, w=logo_w)
     else:
         pdf.set_xy(0, y_footer + 16)
         pdf.set_font(FONT, "B", 11)
         pdf.ink(BEIGE)
         pdf.cell(210, 6, "Agência FOLKS", align="C", **NL)
+    pdf.set_auto_page_break(True, margin=16)
 
 
 def main():
