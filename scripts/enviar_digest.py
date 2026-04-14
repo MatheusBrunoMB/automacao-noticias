@@ -4,7 +4,6 @@ Executado pelo GitHub Actions toda segunda-feira às 08h BRT.
 Compila notícias da semana, gera PDF + XLSX e envia por email.
 """
 
-import base64
 import json
 import os
 import smtplib
@@ -12,6 +11,7 @@ import sys
 import time
 from datetime import datetime, timedelta
 from email.mime.application import MIMEApplication
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from io import BytesIO  # usado pelo openpyxl
@@ -85,11 +85,6 @@ def _agrupar_por_categoria(noticias: list) -> dict:
 
 
 def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -> str:
-    logo_b64 = ""
-    if os.path.exists(LOGO_PATH):
-        with open(LOGO_PATH, "rb") as f:
-            logo_b64 = base64.b64encode(f.read()).decode("ascii")
-
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
     template = env.get_template("email_digest.html")
     return template.render(
@@ -99,7 +94,7 @@ def _gerar_html(grupos: dict, semana_inicio: str, semana_fim: str, total: int) -
         semana_inicio=semana_inicio,
         semana_fim=semana_fim,
         total_noticias=total,
-        logo_b64=logo_b64,
+        has_logo=os.path.exists(LOGO_PATH),
     )
 
 
@@ -470,11 +465,24 @@ def _enviar_email(
     msg["To"] = ", ".join(destinatarios)
     msg["Subject"] = assunto
 
-    # Parte alternativa (texto simples + HTML)
+    # Estrutura: mixed > alternative > (plain | related > (html + logo inline))
     alt = MIMEMultipart("alternative")
     texto_simples = "News semanal disponível. Abra este email em um cliente que suporte HTML."
     alt.attach(MIMEText(texto_simples, "plain", "utf-8"))
-    alt.attach(MIMEText(html_body, "html", "utf-8"))
+
+    if os.path.exists(LOGO_PATH):
+        # HTML + imagem inline via CID (funciona em Gmail, Outlook, Apple Mail)
+        related = MIMEMultipart("related")
+        related.attach(MIMEText(html_body, "html", "utf-8"))
+        with open(LOGO_PATH, "rb") as f:
+            logo_img = MIMEImage(f.read(), _subtype="png")
+        logo_img.add_header("Content-ID", "<logo-folks>")
+        logo_img.add_header("Content-Disposition", "inline", filename="logo-folks.png")
+        related.attach(logo_img)
+        alt.attach(related)
+    else:
+        alt.attach(MIMEText(html_body, "html", "utf-8"))
+
     msg.attach(alt)
 
     # Anexo PDF
