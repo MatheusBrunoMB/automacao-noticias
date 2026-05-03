@@ -1,0 +1,62 @@
+[
+  {
+    "id": "252e6fc6ab559dd8",
+    "titulo": "Redução do Imposto de Renda e a compensação tributária pelos entes municipais",
+    "resumo": "Recentemente, o Congresso aprovou a Lei Federal nº 15.270/2025, que tratou da redução do Imposto de Renda apurado, zerando os valores devidos para determinado montante mensal, bem como anual, com vistas a implementar uma desejada justiça tributária na atualiz…",
+    "url": "https://www.conjur.com.br/2026-mai-02/reducao-do-imposto-de-renda-e-a-utilizacao-da-compensacao-tributaria-pelos-entes-municipais/",
+    "fonte": "NewsAPI - Tributário BR",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-02 07:01:45",
+    "data_coleta": "2026-05-03 07:50:50",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🚨 Lei 15.270/2025: redução do IR já vale — veja o impacto para municípios e contribuintes!"
+  },
+  {
+    "id": "1208465819e8a43d",
+    "titulo": "Crédito de ICMS no agro exige controle para virar caixa",
+    "resumo": "Produtores rurais podem usar créditos de ICMS para reforçar o caixa. Entenda as regras e a importância do controle fiscal e documentação. Leia mais em https://www.contabeis.com.br/noticias/76408/credito-de-icms-no-agro-exige-controle-para-virar-caixa/",
+    "url": "https://www.contabeis.com.br/noticias/76408/credito-de-icms-no-agro-exige-controle-para-virar-caixa/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-02 11:00:01",
+    "data_coleta": "2026-05-03 07:51:00",
+    "prioridade": "Médio",
+    "sugestao_pauta": "💰 Crédito de ICMS no agronegócio: como transformar créditos fiscais em caixa com controle adequado"
+  },
+  {
+    "id": "10114050b51e1e89",
+    "titulo": "Carf nega crédito de PIS/Cofins na compra de ouro financeiro revendido como mercadoria",
+    "resumo": "Como a compra do ouro, não se sujeitou à incidência de contribuições, não há direito ao creditamento no regime não cumulativo",
+    "url": "https://www.jota.info/tributos/carf-nega-credito-de-pis-cofins-na-compra-de-ouro-financeiro-revendido-como-mercadoria",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-05-03 06:00:51",
+    "data_coleta": "2026-05-03 07:51:06",
+    "prioridade": "Médio",
+    "sugestao_pauta": "⚖️ CARF nega crédito de PIS/Cofins na compra de ouro: entenda a decisão e os riscos para sua empresa"
+  },
+  {
+    "id": "59e836c85e92099b",
+    "titulo": "Arrendamento mercantil financeiro na Reforma Tributária",
+    "resumo": "Para leasing, reforma cria regime propenso à dúvida interpretativa, à complexidade operacional e ao contencioso",
+    "url": "https://www.jota.info/opiniao-e-analise/artigos/arrendamento-mercantil-financeiro-na-reforma-tributaria",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-03 06:20:07",
+    "data_coleta": "2026-05-03 07:51:06",
+    "prioridade": "Médio",
+    "sugestao_pauta": "📊 Reforma Tributária e leasing: o que muda no arrendamento mercantil financeiro para seus clientes?"
+  },
+  {
+    "id": "d50f825881706de6",
+    "titulo": "Curso prático: saiba tudo sobre ganho de capital no IRPF",
+    "resumo": "Portal Contábeis lança curso sobre ganho de capital no Imposto de Renda da Pessoa Física ( IRPF ) para profissionais contábeis e contribuintes. Leia mais em https://www.contabeis.com.br/noticias/76481/curso-pratico-saiba-tudo-sobre-ganho-de-capital-no-irpf/",
+    "url": "https://www.contabeis.com.br/noticias/76481/curso-pratico-saiba-tudo-sobre-ganho-de-capital-no-irpf/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-02 09:00:01",
+    "data_coleta": "2026-05-03 07:51:00",
+    "prioridade": "Baixo",
+    "sugestao_pauta": "💡 Ganho de capital no IRPF: guia prático para contadores dominarem o tema na declaração"
+  }
+]
