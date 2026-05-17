@@ -1,0 +1,86 @@
+[
+  {
+    "id": "cced289e36807cd5",
+    "titulo": "MTE orienta sobre suspensão do FGTS",
+    "resumo": "MTE autoriza suspensão temporária do recolhimento do FGTS para empresas em Juiz de Fora, Matias Barbosa e Ubá (MG) devido à calamidade pública. Leia mais em https://www.contabeis.com.br/noticias/76661/mte-orienta-sobre-suspensao-do-fgts/",
+    "url": "https://www.contabeis.com.br/noticias/76661/mte-orienta-sobre-suspensao-do-fgts/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Legislação",
+    "data_publicacao": "2026-05-16 12:00:01",
+    "data_coleta": "2026-05-17 08:01:04",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🚨 MTE suspende FGTS em MG: veja como empresas em calamidade podem solicitar o benefício"
+  },
+  {
+    "id": "5ffb4c4284c6daf2",
+    "titulo": "Na tributação de lucros distribuídos pela Lei nº 15.270/2025, aplica-se o gross-up para apurar a base de cálculo do IRRF?",
+    "resumo": "Não. O mecanismo de reajustamento de base de cálculo não se aplica a essa hipótese. O art. 6º-A da Lei nº 9.250/1995 — incluído pela Lei nº 15.270/2025 — determina que a alíquota de 10% incide diretamente sobre o valor total distribuído ao sócio no mês, sempre que esse montante [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/05/17/na-tributacao-de-lucros-distribuidos-pela-lei-no-15-271-2025-aplica-se-o-gross-up-para-apurar-a-base-de-calculo-do-irrf/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-17 08:00:00",
+    "data_coleta": "2026-05-17 08:00:54",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🚨 Lei nº 15.270/2025: gross-up NÃO se aplica ao IRRF sobre lucros distribuídos — entenda a regra"
+  },
+  {
+    "id": "8aa2d68c73a52677",
+    "titulo": "Tecnologia é apontada como base estrutural da reforma tributária do consumo",
+    "resumo": "A maturidade tecnológica e institucional brasileira é o fator que viabiliza a implementação da reforma tributária do consumo nos moldes em que foi concebida. A avaliação foi apresentada pelo auditor fiscal da Receita Federal Marcos Hübner Flores durante o Fórum TIC na Reforma Tributária, realizado em Brasília em 14 de [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/05/16/tecnologia-e-apontada-como-base-estrutural-da-reforma-tributaria-do-consumo/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-16 08:26:41",
+    "data_coleta": "2026-05-17 08:00:54",
+    "prioridade": "Médio",
+    "sugestao_pauta": "🏗️ Reforma tributária do consumo: como a tecnologia viabiliza a maior mudança fiscal do Brasil"
+  },
+  {
+    "id": "42e2f67778ff276b",
+    "titulo": "IBPT: entenda como usar na nota fiscal",
+    "resumo": "Descubra como a Lei da Transparência Fiscal e a Tabela IBPT impactam empresas e consumidores, com informações sobre cálculo de impostos em notas fiscais. Leia mais em https://www.contabeis.com.br/noticias/76748/ibpt-entenda-como-usar-na-nota-fiscal/",
+    "url": "https://www.contabeis.com.br/noticias/76748/ibpt-entenda-como-usar-na-nota-fiscal/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-16 10:00:02",
+    "data_coleta": "2026-05-17 08:01:04",
+    "prioridade": "Médio",
+    "sugestao_pauta": "🧾 Tabela IBPT na nota fiscal: seu cliente sabe como informar corretamente os impostos? Veja como usar"
+  },
+  {
+    "id": "763df869d374a1e0",
+    "titulo": "No lucro presumido, quando a receita bruta do primeiro trimestre fica abaixo de R$ 1.200.000,00 e no trimestre seguinte ultrapassa R$ 1.500.000,00, é possível usar a folga do trimestre anterior para reduzir o excesso do segundo?",
+    "resumo": "O acréscimo de 10% nos percentuais de presunção do IRPJ e da CSLL, no lucro presumido, incide apenas sobre a parcela da receita bruta total que exceder R$ 5.000.000,00 no ano-calendário, conforme o caput do art. 15 da IN RFB nº 2.305/2025, com as alterações da IN RFB nº 2.305/2026. [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/05/16/no-lucro-presumido-quando-a-receita-bruta-do-primeiro-trimestre-fica-abaixo-de-r-1-200-00000-e-no-trimestre-seguinte-ultrapassa-r-1-500-00000-e-possivel-usar-a-folga-do-trimestre-anterior-para-r/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-16 12:51:19",
+    "data_coleta": "2026-05-17 08:00:54",
+    "prioridade": "Médio",
+    "sugestao_pauta": "📊 Lucro presumido: como funciona o limite de R$ 5 mi para o acréscimo de 10% no IRPJ e CSLL?"
+  },
+  {
+    "id": "642898c1dbe0d1a6",
+    "titulo": "STJ exige intimação de terceiro antes do reconhecimento de fraude à execução fiscal",
+    "resumo": "Caso envolve cessão de créditos tributários e foi decidido a favor do contribuinte",
+    "url": "https://www.jota.info/tributos/stj-exige-intimacao-de-terceiro-antes-do-reconhecimento-de-fraude-a-execucao-fiscal",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-05-17 06:57:42",
+    "data_coleta": "2026-05-17 08:01:09",
+    "prioridade": "Médio",
+    "sugestao_pauta": "⚖️ STJ: intimação prévia é obrigatória antes de reconhecer fraude à execução fiscal — saiba o impacto"
+  },
+  {
+    "id": "0e6295264d247e91",
+    "titulo": "CFC recebe alunos do Centro Universitário Alfredo Nasser para visita guiada",
+    "resumo": "O Conselho Federal de Contabilidade (CFC) recebeu em sua sede, na última segunda-feira (11), um grupo com 14 alunos do Centro Universitário Alfredo Nasser (Unifan). O objetivo da visita foi aproximar os futuros contadores da estrutura que regula a profissão contábil no Brasil. Durante a ação, os acadêmicos tiveram a oportunidade de conhecer o auditório da entidade, espaço onde acontecem&#160; Continuar Lendo",
+    "url": "https://cfc.org.br/noticias/cfc-recebe-alunos-do-centro-universitario-alfredo-nasser-para-visita-guiada/",
+    "fonte": "CFC - Conselho Federal de Contabilidade",
+    "categoria": "Contabilidade",
+    "data_publicacao": "2026-05-11 21:20:00",
+    "data_coleta": "2026-05-17 08:01:06",
+    "prioridade": "Baixo",
+    "sugestao_pauta": "🎓 CFC abre portas para futuros contadores: conheça o papel do Conselho na regulação da profissão"
+  }
+]
