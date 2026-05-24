@@ -1,0 +1,86 @@
+[
+  {
+    "id": "d96fb640980f96e2",
+    "titulo": "Simples Nacional na reforma tributária: migrar ou ficar?",
+    "resumo": "Entenda os desafios da Reforma Tributária para o Simples Nacional : continuar no regime ou recolher IBS / CBS por fora para transferir créditos tributários. Leia mais em https://www.contabeis.com.br/noticias/76805/simples-nacional-na-reforma-tributaria-migrar-ou-ficar/",
+    "url": "https://www.contabeis.com.br/noticias/76805/simples-nacional-na-reforma-tributaria-migrar-ou-ficar/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-23 10:00:02",
+    "data_coleta": "2026-05-24 08:12:22",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🔄 Simples Nacional na Reforma Tributária: migrar ou ficar? O que seu cliente precisa saber agora"
+  },
+  {
+    "id": "6008af7f75f4457c",
+    "titulo": "Veja as obrigações que vencem até o dia 31 de maio",
+    "resumo": "Fim de maio concentra entrega do IRPF 2026, DCTFWeb, DOI, DME e declaração anual obrigatória do MEI . Leia mais em https://www.contabeis.com.br/noticias/76899/veja-as-obrigacoes-que-vencem-ate-o-dia-31-de-maio/",
+    "url": "https://www.contabeis.com.br/noticias/76899/veja-as-obrigacoes-que-vencem-ate-o-dia-31-de-maio/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-23 11:00:02",
+    "data_coleta": "2026-05-24 08:12:22",
+    "prioridade": "Alto",
+    "sugestao_pauta": "📅 Urgente! IRPF, DCTFWeb, DOI, DME e MEI vencem até 31/05 — checklist para não perder nenhum prazo"
+  },
+  {
+    "id": "c40cef9b692fa123",
+    "titulo": "CFC esclarece o que pode levar à cassação do registro contábil",
+    "resumo": "Entenda os motivos que levam à cassação do registro de contadores, como infrações éticas e uso indevido da profissão. Saiba mais sobre os processos. Leia mais em https://www.contabeis.com.br/noticias/76937/cfc-esclarece-o-que-pode-levar-a-cassacao-do-registro-contabil/",
+    "url": "https://www.contabeis.com.br/noticias/76937/cfc-esclarece-o-que-pode-levar-a-cassacao-do-registro-contabil/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Contabilidade",
+    "data_publicacao": "2026-05-23 09:00:02",
+    "data_coleta": "2026-05-24 08:12:22",
+    "prioridade": "Médio",
+    "sugestao_pauta": "🚫 CFC alerta: o que pode levar à cassação do seu registro contábil? Conheça os principais riscos"
+  },
+  {
+    "id": "8cc96672ce3d3a12",
+    "titulo": "SC disponibiliza webservice para download de NFCe via GESIT",
+    "resumo": "A Secretaria de Estado da Fazenda de Santa Catarina (SEF-SC) colocou em fase de testes, para todos os contabilistas credenciados, novo webservice destinado ao download de Notas Fiscais de Consumidor Eletrônicas (NFCe) e seus respectivos eventos. A novidade foi comunicada por meio do Correio Eletrônico DIAT nº 11, de 15/04/2026, [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/05/23/sc-disponibiliza-webservice-para-download-de-nfce-via-gesit/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-05-23 12:31:32",
+    "data_coleta": "2026-05-24 08:12:13",
+    "prioridade": "Médio",
+    "sugestao_pauta": "🧾 SC lança webservice para download de NFCe via GESIT: contabilistas já podem testar a novidade"
+  },
+  {
+    "id": "75c475d3800b847f",
+    "titulo": "Reforma tributária e crimes econômicos",
+    "resumo": "Novo modelo não representa abrandamento do direito penal tributário, mas uma mudança de paradigma",
+    "url": "https://www.jota.info/opiniao-e-analise/artigos/reforma-tributaria-e-crimes-economicos",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-05-24 05:15:08",
+    "data_coleta": "2026-05-24 08:12:26",
+    "prioridade": "Médio",
+    "sugestao_pauta": "⚖️ Reforma tributária e direito penal: o que muda nos crimes econômicos com o novo modelo fiscal?"
+  },
+  {
+    "id": "b613a16883d4aeaa",
+    "titulo": "Carf mantém reclassificação de conservador comercial como congelador para fins de IPI",
+    "resumo": "Alíquota foi mantida em 15% em processo que defendia classificação dos produtos como 'outros' aparelhos para produção de frio",
+    "url": "https://www.jota.info/tributos/carf-mantem-reclassificacao-de-conservador-comercial-como-congelador-para-fins-de-ipi",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-05-24 06:17:54",
+    "data_coleta": "2026-05-24 08:12:26",
+    "prioridade": "Médio",
+    "sugestao_pauta": "📦 CARF mantém alíquota de IPI em 15% para conservador comercial: entenda a decisão de classificação fiscal"
+  },
+  {
+    "id": "d4124c2c3d29034d",
+    "titulo": "Profissionais PJ cobram benefícios e pressionam empresas",
+    "resumo": "Pesquisa revela que trabalhadores PJ querem manter flexibilidade, mas sentem falta de plano de saúde e Previdência Social. Leia mais em https://www.contabeis.com.br/noticias/76831/profissionais-pj-cobram-beneficios-e-pressionam-empresas/",
+    "url": "https://www.contabeis.com.br/noticias/76831/profissionais-pj-cobram-beneficios-e-pressionam-empresas/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-05-23 12:00:01",
+    "data_coleta": "2026-05-24 08:12:22",
+    "prioridade": "Baixo",
+    "sugestao_pauta": "💼 Profissionais PJ x benefícios: saúde e Previdência Social ainda são lacunas — como orientar seus clientes?"
+  }
+]
