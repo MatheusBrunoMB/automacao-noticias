@@ -1,0 +1,98 @@
+[
+  {
+    "id": "9a5bc2b9e10ca748",
+    "titulo": "Em alerta vermelho ao governo, TCU faz críticas contundentes à situação fiscal do país",
+    "resumo": "Tribunal de Contas da União aprova com ressalvas as contas do governo federal relativas ao ano passado",
+    "url": "https://veja.abril.com.br/politica/em-alerta-vermelho-ao-governo-tcu-faz-criticas-contundentes-a-situacao-fiscal-do-pais/",
+    "fonte": "NewsAPI - Tributário BR",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-06-13 08:00:46",
+    "data_coleta": "2026-06-14 08:52:29",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🚨 TCU em alerta vermelho: críticas à situação fiscal do país — o que muda para empresas e contribuintes?"
+  },
+  {
+    "id": "a255b64ceb6ba52d",
+    "titulo": "Reforma tributária exige revisão de NCM, NBS e cClassTrib",
+    "resumo": "Com a reforma tributária , empresas precisam atualizar cadastros fiscais com NCM, NBS e cClassTrib para evitar custos ocultos e garantir conformidade. Leia mais em https://www.contabeis.com.br/noticias/77332/reforma-tributaria-exige-revisao-de-ncm-nbs-e-cclasstrib/",
+    "url": "https://www.contabeis.com.br/noticias/77332/reforma-tributaria-exige-revisao-de-ncm-nbs-e-cclasstrib/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-06-13 10:00:02",
+    "data_coleta": "2026-06-14 08:54:58",
+    "prioridade": "Alto",
+    "sugestao_pauta": "⚠️ Reforma tributária: sua empresa já atualizou NCM, NBS e cClassTrib? Veja como evitar custos ocultos!"
+  },
+  {
+    "id": "4dac9979fd7cc912",
+    "titulo": "O disposto na Seção XIV sobre correção do valor do débito se aplica apenas às operações do regime regular, ou abrange todas as hipóteses de aproveitamento de créditos previstas nos Regulamentos?",
+    "resumo": "A abrangência é total. Os arts. 60 dos Regulamentos do IBS e da CBS expressamente determinam que as regras de correção do valor do débito previstas na Seção XIV aplicam-se a todas as hipóteses de apropriação e utilização de créditos do IBS e da CBS previstas nos respectivos regulamentos, não [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/06/13/o-disposto-na-secao-xiv-sobre-correcao-do-valor-do-debito-se-aplica-apenas-as-operacoes-do-regime-regular-ou-abrange-todas-as-hipoteses-de-aproveitamento-de-creditos-previstas-nos-regulamentos/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-06-13 12:25:39",
+    "data_coleta": "2026-06-14 08:52:27",
+    "prioridade": "Médio",
+    "sugestao_pauta": "📊 IBS e CBS: regras de correção de créditos valem para todos os casos — entenda a abrangência total!"
+  },
+  {
+    "id": "7c324b14632efae9",
+    "titulo": "Após a aprovação da distribuição de lucros e dividendos pelo órgão competente da sociedade, os valores aprovados ainda podem integrar a base de cálculo dos juros sobre capital próprio (JCP)?",
+    "resumo": "Não. Conforme esclarece a Receita Federal na Questão 8 do documento Perguntas e Respostas: Tributação de Altas Rendas – Considerações sobre Lucros e Dividendos, aprovada a distribuição pelo órgão societário competente, os valores correspondentes aos lucros e dividendos devem ser imediatamente classificados no passivo da entidade — no circulante ou [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/06/14/apos-a-aprovacao-da-distribuicao-de-lucros-e-dividendos-pelo-orgao-competente-da-sociedade-os-valores-aprovados-ainda-podem-integrar-a-base-de-calculo-dos-juros-sobre-capital-proprio-jcp/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-06-14 05:02:21",
+    "data_coleta": "2026-06-14 08:52:27",
+    "prioridade": "Médio",
+    "sugestao_pauta": "💡 JCP x Distribuição de lucros: Receita Federal esclarece como calcular a base — entenda agora!"
+  },
+  {
+    "id": "80870832efb6f2d3",
+    "titulo": "Ensaio sobre a cegueira fiscal: pautas-bomba e terrorismo legislativo",
+    "resumo": "Aprovar benefício sem fonte de custeio não testa o Tesouro, convoca o STF que o Congresso depois vai acusar de ativismo",
+    "url": "https://www.jota.info/opiniao-e-analise/artigos/ensaio-sobre-a-cegueira-fiscal-pautas-bomba-e-terrorismo-legislativo",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-06-14 05:30:57",
+    "data_coleta": "2026-06-14 08:55:04",
+    "prioridade": "Médio",
+    "sugestao_pauta": "⚖️ Pautas-bomba no Congresso: como benefícios sem custeio ameaçam o equilíbrio fiscal do país?"
+  },
+  {
+    "id": "898b7e1aae8044f1",
+    "titulo": "Receita Federal em Minas Gerais promove 2º leilão eletrônico de 2026",
+    "resumo": "Evento ocorrerá em 18 de junho e ofertará 41 lotes com veículos, eletrônicos, smartphones, notebooks, relógios e outros produtos apreendidos.",
+    "url": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/junho/receita-federal-em-minas-gerais-promove-2o-leilao-eletronico-de-2026",
+    "fonte": "Receita Federal",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-06-08 12:38:00",
+    "data_coleta": "2026-06-14 08:52:25",
+    "prioridade": "Baixo",
+    "sugestao_pauta": "🔨 Leilão da Receita Federal em MG: 41 lotes disponíveis em junho — veja como participar!"
+  },
+  {
+    "id": "0e24907d28f3d698",
+    "titulo": "Digitalização da contabilidade estará em pauta em congresso de entidade contábil portuguesa",
+    "resumo": "Os profissionais da contabilidade podem contar com uma capacitação de qualidade além-fronteiras. Entre os dias 22 e 24 de setembro, acontece o 8.º Congresso dos Contabilistas Certificados, em Lisboa, Portugal. O evento é uma iniciativa da Ordem dos Contabilistas Certificados (OCC), a entidade que regula e disciplina a atividade contábil no país europeu. A presidente da OCC, Paula Franco, destaca&#160; Continuar Lendo",
+    "url": "https://cfc.org.br/internacional/digitalizacao-da-contabilidade-estara-em-pauta-em-congresso-de-entidade-contabil-portuguesa/",
+    "fonte": "CFC - Conselho Federal de Contabilidade",
+    "categoria": "Contabilidade",
+    "data_publicacao": "2026-06-11 18:16:00",
+    "data_coleta": "2026-06-14 08:55:00",
+    "prioridade": "Baixo",
+    "sugestao_pauta": "🌍 Congresso de contabilidade em Lisboa: digitalização em pauta — oportunidade de atualização internacional!"
+  },
+  {
+    "id": "f7b453499012cf36",
+    "titulo": "CFC prestigia cerimônia de posse da nova diretoria do Sescap/PE",
+    "resumo": "O Conselho Federal de Contabilidade (CFC) esteve presente na cerimônia de posse da nova diretoria Sindicato das Empresas de Serviços Contábeis e das Empresas de Assessoramento, Perícias, Informações e Pesquisas do Estado de Pernambuco (Sescap/PE). A solenidade aconteceu na noite de quinta-feira (11), em Recife/PE, e reuniu autoridades e representantes da classe contábil brasileira.&#160; O evento marcou o início da&#160; Continuar Lendo",
+    "url": "https://cfc.org.br/noticias/cfc-prestigia-cerimonia-de-posse-da-nova-diretoria-do-sescap-pe/",
+    "fonte": "CFC - Conselho Federal de Contabilidade",
+    "categoria": "Contabilidade",
+    "data_publicacao": "2026-06-12 17:10:23",
+    "data_coleta": "2026-06-14 08:55:00",
+    "prioridade": "Baixo",
+    "sugestao_pauta": "🤝 CFC marca presença na posse do Sescap/PE — veja a importância da representatividade contábil!"
+  }
+]
