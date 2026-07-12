@@ -1,0 +1,110 @@
+[
+  {
+    "id": "fe4a1a77eb288790",
+    "titulo": "Receita Federal ajusta regras do contencioso administrativo para devedores contumazes",
+    "resumo": "Portaria RFB 702/2026 amplia a competência das turmas recursais da DRJ-R para apreciação desses casos.",
+    "url": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/julho/receita-federal-ajusta-regras-do-contencioso-administrativo-para-devedores-contumazes",
+    "fonte": "Receita Federal",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-07-10 16:38:29",
+    "data_coleta": "2026-07-12 08:07:11",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🚨 Portaria RFB 702/2026: novas regras para devedores contumazes — o que muda no contencioso?"
+  },
+  {
+    "id": "1df59e1734a5a80c",
+    "titulo": "Receita Federal atualiza regras cadastrais do CNPJ",
+    "resumo": "Nova instrução normativa detalha situações de inconsistência cadastral e atualiza critérios para suspensão de inscrições no cadastro",
+    "url": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/julho/receita-federal-atualiza-regras-cadastrais-do-cnpj",
+    "fonte": "Receita Federal",
+    "categoria": "Legislação",
+    "data_publicacao": "2026-07-10 16:42:56",
+    "data_coleta": "2026-07-12 08:07:11",
+    "prioridade": "Alto",
+    "sugestao_pauta": "📋 Receita atualiza regras do CNPJ: saiba quais inconsistências podem suspender a inscrição do seu cliente"
+  },
+  {
+    "id": "acfe3dc0921da940",
+    "titulo": "Erro no cClassTrib pode bloquear NF-e e gerar riscos fiscais",
+    "resumo": "Preenchimento incorreto do cClassTrib pode provocar a Rejeição 1024 da NF-e e comprometer a dispensa do recolhimento de IBS e CBS durante a transição da reforma tributária . Leia mais em https://www.contabeis.com.br/noticias/77954/erro-no-cclasstrib-pode-bloquear-nf-e-e-gerar-riscos-fiscais/",
+    "url": "https://www.contabeis.com.br/noticias/77954/erro-no-cclasstrib-pode-bloquear-nf-e-e-gerar-riscos-fiscais/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-07-11 10:00:02",
+    "data_coleta": "2026-07-12 08:07:24",
+    "prioridade": "Alto",
+    "sugestao_pauta": "🚨 Erro no cClassTrib pode rejeitar NF-e e gerar riscos na transição do IBS/CBS — veja como evitar"
+  },
+  {
+    "id": "19da2b77d93251a3",
+    "titulo": "Carf permite dedução de perdas com créditos vencidos há mais de cinco anos sem necessidade de cobrança judicial",
+    "resumo": "A 1ª Turma da Câmara Superior do Conselho Administrativo de Recursos Fiscais (Carf) decidiu, por 7 votos a 3, que o Itaú pode deduzir das bases de cálculo do Imposto de Renda Pessoa Jurídica (IRPJ) e da Contribuição Social sobre o Lucro Líquido (CSLL) perdas com créditos vencidos há mais [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/07/11/carf-permite-deducao-de-perdas-com-creditos-vencidos-ha-mais-de-cinco-anos-sem-necessidade-de-cobranca-judicial/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-07-11 08:31:29",
+    "data_coleta": "2026-07-12 08:07:12",
+    "prioridade": "Médio",
+    "sugestao_pauta": "💡 CARF: dedução de perdas com créditos vencidos há +5 anos sem cobrança judicial — impacto no IRPJ e CSLL"
+  },
+  {
+    "id": "a9c7fe357435dc4a",
+    "titulo": "Como liberar créditos de ICMS via Justiça",
+    "resumo": "Entenda quando empresas podem recorrer à Justiça para liberar créditos de ICMS , como funciona o processo e quais os cuidados antes de solicitar a compensação. Leia mais em https://www.contabeis.com.br/noticias/77926/como-liberar-creditos-de-icms-via-justica/",
+    "url": "https://www.contabeis.com.br/noticias/77926/como-liberar-creditos-de-icms-via-justica/",
+    "fonte": "Portal Contábeis",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-07-11 09:00:02",
+    "data_coleta": "2026-07-12 08:07:24",
+    "prioridade": "Médio",
+    "sugestao_pauta": "💡 Como liberar créditos de ICMS via Justiça: passo a passo e cuidados essenciais para sua empresa"
+  },
+  {
+    "id": "b1c220fdcf552a05",
+    "titulo": "Reforma Tributaria: Os saldos credores de ICMS existentes no fim do regime atual serão automaticamente aproveitados pelos contribuintes?",
+    "resumo": "Não. O art. 132 da LC nº 214/2025 (redação da LC nº 227/2026) estabelece que os saldos credores de ICMS existentes em 31 de dezembro de 2032 serão reconhecidos pelos Estados e pelo Distrito Federal, mas seu uso pelos contribuintes depende da observância dos requisitos do § 1º do mesmo [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/07/11/reforma-tributaria-os-saldos-credores-de-icms-existentes-no-fim-do-regime-atual-serao-automaticamente-aproveitados-pelos-contribuintes/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-07-11 12:11:20",
+    "data_coleta": "2026-07-12 08:07:12",
+    "prioridade": "Médio",
+    "sugestao_pauta": "📊 Reforma Tributária: saldos credores de ICMS após 2032 — seus clientes sabem como aproveitá-los?"
+  },
+  {
+    "id": "52a3c619d17806b1",
+    "titulo": "Receita Federal vai excluir plataformas com produtos falsificados do Remessa Conforme ainda em 2026",
+    "resumo": "A Receita Federal deve implementar, ainda neste ano, sistema que excluirá do programa Remessa Conforme as plataformas de comércio internacional que permitirem a venda de produtos subfaturados, falsificados ou que apresentem outras ilegalidades. O anúncio foi feito pelo coordenador de Administração Aduaneira da Receita, Fabrício Betto, durante audiência pública da [&#8230;]",
+    "url": "https://noticiasfiscais.com.br/2026/07/11/receita-federal-vai-excluir-plataformas-com-produtos-falsificados-do-remessa-conforme-ainda-em-2026/",
+    "fonte": "Notícias Fiscais",
+    "categoria": "Tributário",
+    "data_publicacao": "2026-07-11 16:02:01",
+    "data_coleta": "2026-07-12 08:07:12",
+    "prioridade": "Médio",
+    "sugestao_pauta": "🌐 Remessa Conforme em risco: Receita vai excluir plataformas com produtos ilegais ainda em 2026"
+  },
+  {
+    "id": "2afe41f4e8c57669",
+    "titulo": "NJP como alternativa à vedação da transação tributária federal",
+    "resumo": "Sistema multiportas oferece saída, desde que a estratégia seja aplicada corretamente",
+    "url": "https://www.jota.info/opiniao-e-analise/colunas/pauta-fiscal/njp-como-alternativa-a-vedacao-da-transacao-tributaria-federal",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-07-12 05:00:33",
+    "data_coleta": "2026-07-12 08:07:30",
+    "prioridade": "Médio",
+    "sugestao_pauta": "⚖️ NJP como alternativa à transação tributária federal: quando usar e como aplicar corretamente"
+  },
+  {
+    "id": "25fb2622dfb80e9a",
+    "titulo": "Carf aprova ágio em operação entre Getnet e Santander no setor de meios de pagamento",
+    "resumo": "Conselho rejeita acusação de que houve uma empresa veículo interposta para viabilizar aproveitamento fiscal",
+    "url": "https://www.jota.info/tributos/carf-aprova-agio-em-operacao-entre-getnet-e-santander-no-setor-de-meios-de-pagamento",
+    "fonte": "JOTA Jornalismo",
+    "categoria": "Jurídico",
+    "data_publicacao": "2026-07-12 06:20:33",
+    "data_coleta": "2026-07-12 08:07:30",
+    "prioridade": "Médio",
+    "sugestao_pauta": "⚖️ CARF aprova ágio entre Getnet e Santander: entenda quando o aproveitamento fiscal de ágio é válido"
+  }
+]
